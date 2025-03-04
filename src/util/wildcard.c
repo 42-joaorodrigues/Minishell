@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_string.h"
-#include "minishell.h"
+#include "../../lib/include/lib_string.h"
+#include "../../include/minishell.h"
 #include <dirent.h>
 
 /*

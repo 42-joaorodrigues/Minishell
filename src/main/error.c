@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "util.h"
+#include "../../include/util.h"
 #include "error.h"
 #include <unistd.h>
 

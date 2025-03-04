@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 #include <stdlib.h>
 
 t_token *tokenize_line(char *line)
