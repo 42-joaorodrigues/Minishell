@@ -22,6 +22,7 @@
  * Verifica se o comando informado é um builtin.
  *
  * Retorna: 1 se for builtin, 0 caso contrário.
+ * xd
  */
 int	is_builtin(const char *cmd)
 {
