@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vigde-ol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lalex-ku <lalex-ku@42sp.org.br>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 15:25:31 by vigde-ol          #+#    #+#             */
-/*   Updated: 2025/03/13 15:16:57 by joao-alm         ###   ########.fr       */
+/*   Created: 2022/06/22 17:32:45 by lalex-ku          #+#    #+#             */
+/*   Updated: 2022/06/22 17:32:50 by lalex-ku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
 
-#include "jal_print.h"
-#include "util.h"
-#include "minishell.h"
-
-int	main(int ac, char **av, char **envp)
+int	main(int argc, char const *argv[])
 {
-	(void)ac;
-	(void)av;
+	int	pid;
 
-
-	return (SUCCESS);
+	pid = fork();
+	open("infile", O_RDONLY);
+	while (1)
+	{
+		printf("Helloo miniHELL %i\n", pid);
+		sleep(1);
+	}
+	return (0);
 }

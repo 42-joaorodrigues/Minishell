@@ -26,7 +26,7 @@ static int	ft_strlen(const char *str)
 
 static void	ft_puterror(const char *errstr)
 {
-	write(2, PROGRAM_NAME, ft_strlen(PROGRAM_NAME));
+	write(2, NAME, ft_strlen(NAME));
 	write(2, ": ", 2);
 	write(2, errstr, ft_strlen(errstr));
 }

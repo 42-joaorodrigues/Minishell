@@ -74,12 +74,13 @@ SRC_STRING		= src/string/ft_split.c \
                   src/string/ft_strrchr.c \
                   src/string/ft_strtrim.c \
                   src/string/ft_substr.c \
-                  src/string/strcpy.c
+                  src/string/strcpy.c \
+                  src/string/strndup.c
 
 # Files
 SRC				= $(SRC_CHAR) $(SRC_CONV) $(SRC_GNL) $(SRC_LIST) \
-				  $(SRC_MEM) $(SRC_PRINT) $(SRC_LIST)
-INC				= -Iinclude
+				  $(SRC_MEM) $(SRC_PRINT) $(SRC_STRING)
+INC				= -I include
 OBJ				= $(SRC:src/%.c=$(O_DIR)/%.o)
 
 # Mandatory Rules
