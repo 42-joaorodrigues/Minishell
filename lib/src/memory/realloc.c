@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_memory.h"
+#include "jal_memory.h"
 
 /**
  * Gets a previous Malloc, creates a bigger,

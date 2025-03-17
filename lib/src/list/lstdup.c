@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_list.h"
+#include "jal_list.h"
 #include <stdlib.h>
 
 char	*ft_lstdup_strdup(const char *s)

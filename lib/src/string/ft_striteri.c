@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_string.h"
+#include "jal_string.h"
 
 /**
  * Applies the given function to all characters of the given String.

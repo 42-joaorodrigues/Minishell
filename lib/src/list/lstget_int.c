@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdint.h>
-#include "lib_list.h"
+#include "jal_list.h"
 
 int	ft_lstget_int(const t_list *lst)
 {

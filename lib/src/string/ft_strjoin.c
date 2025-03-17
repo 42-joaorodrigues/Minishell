@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_string.h"
+#include "jal_string.h"
 
 /**
  * Concatenates two strings into a newly allocated string.

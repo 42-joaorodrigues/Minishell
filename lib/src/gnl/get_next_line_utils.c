@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_gnl.h"
+#include "jal_gnl.h"
 
 char	*ft_gnl_strchr(const char *str, char c)
 {

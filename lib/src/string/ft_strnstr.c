@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_string.h"
+#include "jal_string.h"
 
 /**
  * Searches for a string (needle/little) inside another string (haystack/big).

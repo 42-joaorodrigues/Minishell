@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib_gnl.h                              :+:      :+:    :+:   */
+/*   JAL_gnl.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <support@toujoustudios.net>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_GNL_H
-# define LIB_GNL_H
+#ifndef JAL_GNL_H
+# define JAL_GNL_H
 
 # include <stdlib.h>
 
@@ -30,4 +30,4 @@ char	*ft_gnl_strjoin(char *s1, char *s2);
 
 char	*get_next_line(int fd);
 
-#endif // LIB_GNL_H
+#endif // JAL_GNL_H

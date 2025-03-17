@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_string.h"
+#include "jal_string.h"
 
 /**
  * Locates the last character occurrence in a string

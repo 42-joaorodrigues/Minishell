@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib_string.h                                       :+:      :+:    :+:   */
+/*   JAL_string.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.42luxembourg.>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_STRING_H
-# define LIB_STRING_H
+#ifndef JAL_STRING_H
+# define JAL_STRING_H
 
 # include <stdlib.h>
 
@@ -33,4 +33,4 @@ char	*ft_strrchr(const char *str, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
-#endif //LIB_STRING_H
+#endif //JAL_STRING_H

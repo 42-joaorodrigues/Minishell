@@ -10,10 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/util.h"
+#include "util.h"
+#include <readline/readline.h>
+#include <stdlib.h>
 
 int	ft_exit(int exit_code)
 {
 	ft_print_error(exit_code);
-	return (exit_code);
+	rl_clear_history();
+	exit(exit_code);
 }

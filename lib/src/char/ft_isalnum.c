@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_char.h"
+#include "jal_char.h"
 
 /**
  * Checks if a character is alphabetic or numeric (A-Z) or (a-z) or (0-9).

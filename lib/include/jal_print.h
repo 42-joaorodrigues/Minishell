@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_PRINT_H
-# define LIB_PRINT_H
+#ifndef JAL_PRINT_H
+# define JAL_PRINT_H
 
 /*
 ** ==========================================================
@@ -28,4 +28,4 @@ void	ft_putnbr_count(int nbr, int *count);
 void	ft_putnbr_unsigned_count(unsigned int nbr, int *count);
 void	ft_put_hex_count(unsigned long ptr, const char *hex_digits, int *count);
 
-#endif //LIB_PRINT_H
+#endif //JAL_PRINT_H

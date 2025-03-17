@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_gnl.h"
+#include "jal_gnl.h"
 #include <unistd.h>
 
 char	*ft_join_free(char *s1, char *s2)

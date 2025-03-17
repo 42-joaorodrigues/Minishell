@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_LIST_H
-# define LIB_LIST_H
+#ifndef JAL_LIST_H
+# define JAL_LIST_H
 
 typedef struct s_list
 {
@@ -36,4 +36,4 @@ void				ft_lstdel_safely(t_list **head, t_list *node,
 t_list				*ft_lstnew_int(int i);
 int					ft_lstget_int(const t_list *lst);
 
-#endif // LIB_LIST_H
+#endif // JAL_LIST_H

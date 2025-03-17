@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "lib_list.h"
+#include "jal_list.h"
 
 t_list	*ft_lstdetach(t_list **head, t_list *node)
 {

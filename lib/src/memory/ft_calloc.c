@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_memory.h"
+#include "jal_memory.h"
 
 /**
  * Allocates memory for an array of pointers.

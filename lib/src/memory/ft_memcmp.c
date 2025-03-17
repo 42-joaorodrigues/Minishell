@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_memory.h"
+#include "jal_memory.h"
 
 /**
  * Compares the first n bytes of area of memory pointed by s1

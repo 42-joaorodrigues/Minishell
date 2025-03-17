@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/util.h"
-#include "error.h"
+#include "util.h"
+#include "minishell.h"
 #include <unistd.h>
 
 static int	ft_strlen(const char *str)
@@ -24,34 +24,18 @@ static int	ft_strlen(const char *str)
 	return (i);
 }
 
-static void	ft_puterror(const char *err_msg)
+static void	ft_puterror(const char *errstr)
 {
-	write(2, "Error\n", 6);
-	write(2, PINK, ft_strlen(PINK));
-	write(2, err_msg, ft_strlen(err_msg));
-	write(2, RESET, ft_strlen(RESET));
-}
-
-static void	ft_standard_error(const int errno)
-{
-	if (errno == E_FORMAT)
-		ft_puterror("Format: ./philo <n_philos> <die_time> <eat_time> "
-			"<sleep_time> [n_meals]\n");
-	else if (errno == E_MEM_ALLOC)
-		ft_puterror("Memory allocation failed\n");
-	else if (errno == E_CREATE_THREAD)
-		ft_puterror("Failed to create thread\n");
-	else if (errno == E_JOIN_THREAD)
-		ft_puterror("Failed to join thread\n");
-	else if (errno == E_MUTEX_INIT)
-		ft_puterror("Failed to initiate mutex\n");
+	write(2, PROGRAM_NAME, ft_strlen(PROGRAM_NAME));
+	write(2, ": ", 2);
+	write(2, errstr, ft_strlen(errstr));
 }
 
 int	ft_print_error(const int errno)
 {
-	if (errno < 100)
-		ft_standard_error(errno);
-	else if (errno == E_PARENTHESES)
-		ft_puterror("Closed parentheses failed\n");
+	if (errno == E_MEM_ALLOC)
+		ft_puterror("memory allocation failed\n");
+	else if (errno == E_SYNTAX)
+		ft_puterror("syntax error\n");
 	return (errno);
 }

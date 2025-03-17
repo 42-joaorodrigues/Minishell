@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_CONVERSION_H
-# define LIB_CONVERSION_H
+#ifndef JAL_CONVERSION_H
+# define JAL_CONVERSION_H
 
 char		*ft_itoa(int n);
 int			ft_atoi(const char *nptr);
@@ -20,4 +20,4 @@ int			ft_tolower(int c);
 long long	ft_atoll_valid(const char *str, long long min, long long max,
 				int *valid);
 
-#endif //LIB_CONVERSION_H
+#endif //JAL_CONVERSION_H

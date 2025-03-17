@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_MEMORY_H
-# define LIB_MEMORY_H
+#ifndef JAL_MEMORY_H
+# define JAL_MEMORY_H
 
 # include <stdlib.h>
 
@@ -26,4 +26,4 @@ void	ft_free_matrix(void **matrix, int index);
 void	*ft_realloc(void *src, size_t old_size, size_t new_size);
 void	ft_sort_tab(int *tab, const int size);
 
-#endif //LIB_MEMORY_H
+#endif //JAL_MEMORY_H

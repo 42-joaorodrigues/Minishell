@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_list.h"
+#include "jal_list.h"
 
 void	ft_lstdel_safely(t_list **head, t_list *node, void (*del)(void *))
 {
