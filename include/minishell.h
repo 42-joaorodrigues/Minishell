@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+#include "util.h"
 #include "jal_list.h"
 
 #define NAME "favela_shell"
@@ -37,10 +38,14 @@ typedef struct	s_token
 typedef struct	s_program
 {
 	t_list		*tokens;
+	int			exit_code;
 }				t_prog;
 
+// lexer
+int		ft_lexer(t_list **token_list, const char *input);
+
 // token_utils
-t_token	*new_token(const t_token_type type, char *value);
+t_token	*ft_new_token(const t_token_type type, char *value);
 void	ft_free_token(void *token);
 
 #endif //MINISHELL_H

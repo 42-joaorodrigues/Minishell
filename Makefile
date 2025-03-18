@@ -9,6 +9,7 @@ CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -g
 RM			= rm -rf
 O_DIR		= .obj
+valgrind	= valgrind.sh
 header		= .obj/header
 sleep		= 0.01
 
@@ -20,15 +21,17 @@ LIBS_INC	= -I lib/include \
 			  -I /usr/include/readline
 
 # Mandatory Files
-NAME	= minishell
-M_SRC	= src/main/main.c \
-		  src/main/error.c \
-		  src/main/exit.c
-M_INC	= -Iinclude
-M_OBJ	= $(M_SRC:src/%.c=$(O_DIR)/$(notdir %.o))
+NAME		= minishell
+M_INC		= -Iinclude
+M_SRC		= src/main/main.c \
+			  src/main/error.c \
+			  src/main/exit.c \
+			  src/parser/lexer.c \
+			  src/util/token_util.c
+M_OBJ		= $(M_SRC:src/%.c=$(O_DIR)/$(notdir %.o))
 
 # Mandatory Rules
-all: $(header) $(JAL) $(NAME)
+all: $(header) $(JAL) $(NAME) $(valgrind)
 
 $(NAME): $(M_OBJ)
 	@printf "Compiling [$(y)$(NAME)$(r)]: executable$(c)\r"
@@ -56,12 +59,37 @@ fclean:
 	@sleep $(sleep)
 	@$(RM) $(NAME)
 	@printf "Removing [$(p)$(NAME)$(r)]: $(g)Success$(r)$(c)\n"
+	@printf "Removing [$(p)$(valgrind)$(r)]: $(valgrind)$(c)\r"
+	@sleep $(sleep)
+	@$(RM) $(valgrind)
+	@$(RM) minishell.supp
+	@printf "Removing [$(p)$(valgrind)$(r)]: $(g)Success$(r)$(c)\n"
 
 re: fclean all
 
 # Lib Rule
 $(JAL):
 	@make -C lib --no-print-directory
+
+# Valgrind Rule
+$(valgrind):
+	@printf "Generating [$(y)$(valgrind)$(r)]: executable$(c)\r"
+	@echo "{" > minishell.supp
+	@echo "readline" >> minishell.supp
+	@echo "Memcheck:Leak" >> minishell.supp
+	@echo "..." >> minishell.supp
+	@echo "fun:readline" >> minishell.supp
+	@echo "}" >> minishell.supp
+	@echo "{" >> minishell.supp
+	@echo "add_history" >> minishell.supp
+	@echo "Memcheck:Leak" >> minishell.supp
+	@echo "..." >> minishell.supp
+	@echo "fun:add_history" >> minishell.supp
+	@echo "}" >> minishell.supp
+	@echo "#!/bin/bash" > $(valgrind)
+	@echo "valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --suppressions=minishell.supp ./minishell" >> $(valgrind)
+	@chmod +x $(valgrind)
+	@printf "Generating [$(y)$(valgrind)$(r)]: $(g)Success$(r)$(c)\n"
 
 # Colours
 c	= \033[K
