@@ -17,7 +17,7 @@
 #include "jal_list.h"
 
 #define NAME "favela_shell"
-#define PROMPT YELLOW NAME RESET PINK " ❯ " RESET
+#define PROMPT YELLOW NAME RESET GREEN " ❯ " RESET
 
 typedef enum e_token_type
 {
@@ -37,9 +37,15 @@ typedef struct	s_token
 
 typedef struct	s_program
 {
-	t_list		*tokens;
+	t_list		*token_list;
 	int			exit_code;
 }				t_prog;
+
+// init
+void	ft_init_prog(t_prog *prog);
+
+// parser
+int		ft_parser(t_prog *prog, const char *input);
 
 // lexer
 int		ft_lexer(t_list **token_list, const char *input);

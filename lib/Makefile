@@ -12,7 +12,6 @@ CC				= cc
 CFLAGS			= -Wall -Werror -Wextra -g
 RM				= rm -rf
 O_DIR			= .obj
-sleep			= 0.01
 
 # Char Files
 SRC_CHAR 		= src/char/ft_isalnum.c \
@@ -97,19 +96,12 @@ $(O_DIR)/%.o: src/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 clean:
-	@printf "Removing [$(p)$(DISPLAY_NAME)$(r)]: $(O_DIR)$(c)\r"
-	@sleep $(sleep)
-	@$(RM) $(O_DIR)
-	@printf "Removing [$(p)$(DISPLAY_NAME)$(r)]: $(g)Success$(r)$(c)\n"
+	@if [ ! -d $(O_DIR) ]; then printf "Nothing to remove\n"; fi
+	@if [ -d $(O_DIR) ]; then make remove tname="joao-alm_lib objects" t1=$(O_DIR) --no-print-directory; fi
 
 fclean:
-	@printf "Removing [$(p)$(DISPLAY_NAME)$(r)]: $(NAME)$(c)\r"
-	@sleep $(sleep)
-	@$(RM) $(NAME)
-	@printf "Removing [$(p)$(DISPLAY_NAME)$(r)]: $(O_DIR)$(c)\r"
-	@sleep $(sleep)
-	@$(RM) $(O_DIR)
-	@printf "Removing [$(p)$(DISPLAY_NAME)$(r)]: $(g)Success$(r)$(c)\n"
+	@if [ ! -d $(O_DIR) ] && [ ! -f $(NAME) ]; then printf "Nothing to remove\n"; fi
+	@if [ -d $(O_DIR) ] || [ -f $(NAME) ]; then make remove tname=$(DISPLAY_NAME) t1=$(O_DIR) t2=$(NAME) --no-print-directory; fi
 
 re: fclean all
 
@@ -120,6 +112,12 @@ y	= \033[38;2;255;248;147m
 g	= \033[38;2;129;223;164m
 b	= \033[1m
 r	= \033[0m
+
+# Custom Rules
+remove:
+	@$(RM) $(t1)
+	@$(RM) $(t2)
+	@printf "Removing [$(p)$(tname)$(r)]: $(g)Success$(r)\n"
 
 # Phony
 .PHONY: all clean fclean re

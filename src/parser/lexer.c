@@ -62,10 +62,18 @@ static int	ft_parse_word(t_list **token_list, const char *input, int *i)
 	char	*word;
 	t_token	*new_token;
 	int		start;
+	char	quote;
 
 	start = *i;
-	while (input[*i] && input[*i] != ' ' && !ft_issym(input[*i]))
-		*i += 1;
+	quote = 0;
+	while (input[*i] && (quote || (input[*i] != ' ' && !ft_issym(input[*i]))))
+	{
+		if (!quote && (input[*i] == '\'' || input[*i] == '\"'))
+			quote = input[*i];
+		else if (quote && input[*i] == quote)
+			quote = 0;
+		(*i)++;
+	}
 	word = ft_strndup(&input[start], *i - start);
 	if (!word)
 		return (ERROR);

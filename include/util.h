@@ -34,8 +34,8 @@
 # define ERROR 1
 # define E_MEM_ALLOC 10
 # define E_SYNTAX 11
+# define E_QUOTES 12
 
 int		ft_print_error(int errno);
-int		ft_exit(int exit_code);
 
 #endif // UTIL_H

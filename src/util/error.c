@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "util.h"
-#include "minishell.h"
+#include "../../include/util.h"
+#include "../../include/minishell.h"
 #include <unistd.h>
 
 static int	ft_strlen(const char *str)
@@ -26,16 +26,21 @@ static int	ft_strlen(const char *str)
 
 static void	ft_puterror(const char *errstr)
 {
+	write(2, PINK, ft_strlen(PINK));
 	write(2, NAME, ft_strlen(NAME));
-	write(2, ": ", 2);
+	write(2, " ❯ ", 5);
+	write(2, RESET, ft_strlen(RESET));
 	write(2, errstr, ft_strlen(errstr));
+	write(2, "\n", 1);
 }
 
 int	ft_print_error(const int errno)
 {
 	if (errno == E_MEM_ALLOC)
-		ft_puterror("memory allocation failed\n");
+		ft_puterror("memory allocation failed");
 	else if (errno == E_SYNTAX)
-		ft_puterror("syntax error\n");
+		ft_puterror("syntax error");
+	else if (errno == E_QUOTES)
+		ft_puterror("syntax error : unclosed quotes");
 	return (errno);
 }

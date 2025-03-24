@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 14:51:22 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/02/07 14:51:36 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/03/19 14:05:01 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/03/19 14:05:06 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "util.h"
-#include <readline/readline.h>
-#include <stdlib.h>
+#ifndef TEST_H
+#define TEST_H
 
-int	ft_exit(int exit_code)
-{
-	ft_print_error(exit_code);
-	rl_clear_history();
-	exit(exit_code);
-}
+#include <stdlib.h>
+#include "minishell.h"
+#include "jal_print.h"
+
+void	test_print_tokens(t_list *token_list);
+
+#endif //TEST_H
