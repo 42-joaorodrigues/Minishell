@@ -10,32 +10,44 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "test.h"
+
+char	*ft_token_type_str(t_token_type token_type)
+{
+	if (token_type == TOKEN_SQUOTE)
+		return ("Single Quote");
+	if (token_type == TOKEN_DQUOTE)
+		return ("Double Quote");
+	if (token_type == TOKEN_WORD)
+		return ("Word");
+	if (token_type == TOKEN_PIPE)
+		return ("Pipe");
+	if (token_type == TOKEN_APPEND)
+		return ("Append");
+	if (token_type == TOKEN_HEREDOC)
+		return ("Heredoc");
+	if (token_type == TOKEN_REDIRECT_IN)
+		return ("Redirect_in");
+	if (token_type == TOKEN_REDIRECT_OUT)
+		return ("Redirect_out");
+	return ("Unkown");
+}
 
 void	test_print_tokens(t_list *token_list)
 {
 	t_list	*tmp;
 	t_token	*token;
-	char	*str_type;
 
 	tmp = token_list;
+	printf("-------------------------------------------------------------------\n");
+	printf("Type           |Value                                             |\n");
+	printf("-------------------------------------------------------------------\n");
 	while (tmp)
 	{
 		token = (t_token *)tmp->content;
-		str_type = NULL;
-		if (token->type == TOKEN_WORD)
-			str_type = "Word";
-		else if (token->type == TOKEN_PIPE)
-			str_type = "Pipe";
-		else if (token->type == TOKEN_APPEND)
-			str_type = "Append";
-		else if (token->type == TOKEN_HEREDOC)
-			str_type = "Heredoc";
-		else if (token->type == TOKEN_REDIRECT_IN)
-			str_type = "Redirect_in";
-		else if (token->type == TOKEN_REDIRECT_OUT)
-			str_type = "Redirect_out";
-		ft_printf("Token: type = %s, value = '%s'\n", str_type, token->value);
+		printf("%-15.15s|%-50.50s|\n", ft_token_type_str(token->type), token->value);
 		tmp = tmp->next;
 	}
+	printf("-------------------------------------------------------------------\n");
 }

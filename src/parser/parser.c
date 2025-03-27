@@ -43,9 +43,9 @@ int	ft_parser(t_prog *prog, const char *input)
 		ft_print_error(E_QUOTES);
 		return (SUCCESS);
 	}
-	if (ft_lexer(&prog->token_list, input) == ERROR)
-		return (prog->exit_code = E_MEM_ALLOC, ERROR);
 	if (ft_strcmp(input, "tokens") == SUCCESS)
 		test_print_tokens(prog->token_list);
+	else if (ft_lexer(&prog->token_list, input) == ERROR)
+		return (prog->exit_code = E_MEM_ALLOC, ERROR);
 	return (SUCCESS);
 }
