@@ -10,34 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "jal_string.h"
+#include "minishell.h"
 #include <stdlib.h>
 #include <util.h>
 
-#include "jal_string.h"
-#include "minishell.h"
-
-static int ft_issymbol(const char c)
+static int	ft_issymbol(const char c)
 {
 	return (c == '|' || c == '<' || c == '>');
-}
-
-t_token_type	ft_get_token_type(char *s)
-{
-	if (s[0] == '|' && s[1] == '\0')
-		return (TOKEN_PIPE);
-	if (s[0] == '<' && s[1] == '\0')
-		return (TOKEN_REDIRECT_IN);
-	if (s[0] == '>' && s[1] == '\0')
-		return (TOKEN_REDIRECT_OUT);
-	if (ft_strncmp(s, ">>", 2) == 0)
-		return (TOKEN_APPEND);
-	if (ft_strncmp(s, "<<", 2) == 0)
-		return (TOKEN_HEREDOC);
-	if (s[0] == '\'')
-		return (TOKEN_SQUOTE);
-	if (s[0] == '\"')
-		return (TOKEN_DQUOTE);
-	return (TOKEN_WORD);
 }
 
 static int	ft_parse_sym(t_list **token_list, const char *input, int *i)
@@ -70,7 +50,8 @@ static int	ft_parse_word(t_list **token_list, const char *input, int *i)
 
 	start = *i;
 	quote = 0;
-	while (input[*i] && (quote || (input[*i] != ' ' && !ft_issymbol(input[*i]))))
+	while (input[*i] && (quote || (input[*i] != ' '
+				&& !ft_issymbol(input[*i]))))
 	{
 		if (!quote && (input[*i] == '\'' || input[*i] == '\"'))
 			quote = input[*i];
@@ -90,7 +71,7 @@ static int	ft_parse_word(t_list **token_list, const char *input, int *i)
 
 int	ft_lexer(t_list **token_list, const char *input)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (input[i])

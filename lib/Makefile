@@ -6,7 +6,6 @@
 
 # Compiler Settings
 NAME			= libjal.a
-DISPLAY_NAME	= joao-alm_lib
 LIBC			= ar rcs
 CC				= cc
 CFLAGS			= -Wall -Werror -Wextra -g
@@ -85,25 +84,39 @@ OBJ				= $(SRC:src/%.c=$(O_DIR)/%.o)
 # Mandatory Rules
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@printf "Compiling [$(y)$(DISPLAY_NAME)$(r)]: executable$(c)\r"
-	@$(LIBC) $@ $(OBJ)
-	@printf "Compiling [$(y)$(DISPLAY_NAME)$(r)]: $(g)Success$(r)$(c)\n"
-
 $(O_DIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)
-	@printf "Compiling [$(y)$(DISPLAY_NAME)$(r)]: $(notdir $@)$(c)\r"
+	@make .print_start print_color="$(y)" print_action="Compiling" print_name=$(NAME) print_file=$(notdir $@) --no-print-directory
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
+
+$(NAME): $(OBJ)
+	@make .print_start print_color="$(y)" print_action="Compiling" print_name=$(NAME) print_file=$(NAME) --no-print-directory
+	@$(LIBC) $@ $(OBJ)
+	@make .print_end print_color="$(y)" print_action="Compiling" print_name=$(NAME) --no-print-directory
 
 clean:
 	@if [ ! -d $(O_DIR) ]; then printf "Nothing to remove\n"; fi
-	@if [ -d $(O_DIR) ]; then make remove tname="joao-alm_lib objects" t1=$(O_DIR) --no-print-directory; fi
+	@if [ -d $(O_DIR) ]; then make .remove tname="joao-alm_lib_objects" t1=$(O_DIR) t2=$(O_DIR) --no-print-directory; fi
 
 fclean:
 	@if [ ! -d $(O_DIR) ] && [ ! -f $(NAME) ]; then printf "Nothing to remove\n"; fi
-	@if [ -d $(O_DIR) ] || [ -f $(NAME) ]; then make remove tname=$(DISPLAY_NAME) t1=$(O_DIR) t2=$(NAME) --no-print-directory; fi
+	@if [ -d $(O_DIR) ] || [ -f $(NAME) ]; then make .remove tname="joao-alm_lib" t1=$(O_DIR) t2=$(NAME) --no-print-directory; fi
 
 re: fclean all
+
+# Custom Rules
+.print_start:
+	@printf "$(print_color)%-$(col1pad).$(col1pad)s$(r) %-$(col2pad).$(col2pad)s %s$(c)\r" "$(print_action)" "$(print_name)" "$(print_file)"
+
+.print_end:
+	@printf "$(print_color)%-$(col1pad).$(col1pad)s$(r) %-$(col2pad).$(col2pad)s $(g)Success$(r)$(c)\n" "$(print_action)" "$(print_name)"
+
+.remove:
+	@make .print_start print_color="$(p)" print_action="Removing" print_name=$(tname) print_file=$(t1) --no-print-directory
+	@$(RM) $(t1)
+	@make .print_start print_color="$(p)" print_action="Removing" print_name=$(tname) print_file=$(t2) --no-print-directory
+	@$(RM) $(t2)
+	@make .print_end print_color="$(p)" print_action="Removing" print_name=$(tname) --no-print-directory
 
 # Colours
 c	= \033[K
@@ -112,12 +125,6 @@ y	= \033[38;2;255;248;147m
 g	= \033[38;2;129;223;164m
 b	= \033[1m
 r	= \033[0m
-
-# Custom Rules
-remove:
-	@$(RM) $(t1)
-	@$(RM) $(t2)
-	@printf "Removing [$(p)$(tname)$(r)]: $(g)Success$(r)\n"
 
 # Phony
 .PHONY: all clean fclean re

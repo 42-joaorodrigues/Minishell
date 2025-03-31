@@ -10,8 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "jal_string.h"
 #include "minishell.h"
+#include <stdlib.h>
+
+t_token_type	ft_get_token_type(char *s)
+{
+	if (s[0] == '|' && s[1] == '\0')
+		return (TOKEN_PIPE);
+	if (s[0] == '<' && s[1] == '\0')
+		return (TOKEN_REDIRECT_IN);
+	if (s[0] == '>' && s[1] == '\0')
+		return (TOKEN_REDIRECT_OUT);
+	if (ft_strncmp(s, ">>", 2) == 0)
+		return (TOKEN_APPEND);
+	if (ft_strncmp(s, "<<", 2) == 0)
+		return (TOKEN_HEREDOC);
+	if (s[0] == '\'')
+		return (TOKEN_SQUOTE);
+	if (s[0] == '\"')
+		return (TOKEN_DQUOTE);
+	return (TOKEN_WORD);
+}
 
 t_token	*ft_new_token(const t_token_type type, char *value)
 {

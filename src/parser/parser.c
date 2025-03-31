@@ -12,8 +12,8 @@
 
 #include "jal_string.h"
 #include "minishell.h"
-#include "util.h"
 #include "test.h"
+#include "util.h"
 
 int	ft_check_quotes(const char *input)
 {
@@ -23,7 +23,7 @@ int	ft_check_quotes(const char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '\'' || input[i] == '\"')
+		if (ft_is_quote(input[i]))
 		{
 			quote = input[i++];
 			while (input[i] && input[i] != quote)
@@ -38,14 +38,26 @@ int	ft_check_quotes(const char *input)
 
 int	ft_parser(t_prog *prog, const char *input)
 {
+	t_list	*current;
+
 	if (ft_check_quotes(input) == ERROR)
 	{
 		ft_print_error(E_QUOTES);
 		return (SUCCESS);
 	}
-	if (ft_strcmp(input, "tokens") == SUCCESS)
-		test_print_tokens(prog->token_list);
-	else if (ft_lexer(&prog->token_list, input) == ERROR)
+	if (ft_strncmp(input, "token", 5) == SUCCESS)
+	{
+		test_tokens(input, &prog->token_list);
+		return (SUCCESS);
+	}
+	if (ft_lexer(&prog->token_list, input) == ERROR)
 		return (prog->exit_code = E_MEM_ALLOC, ERROR);
+	current = prog->token_list;
+	while (current)
+	{
+		if (ft_process_quotes(current->content, prog) == ERROR)
+			return (prog->exit_code = E_MEM_ALLOC, ERROR);
+		current = current->next;
+	}
 	return (SUCCESS);
 }

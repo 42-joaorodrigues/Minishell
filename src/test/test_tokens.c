@@ -10,10 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "jal_string.h"
 #include "test.h"
+#include <stdio.h>
 
-char	*ft_token_type_str(t_token_type token_type)
+static char	*ft_token_type_str(const t_token_type token_type)
 {
 	if (token_type == TOKEN_SQUOTE)
 		return ("Single Quote");
@@ -31,23 +32,36 @@ char	*ft_token_type_str(t_token_type token_type)
 		return ("Redirect_in");
 	if (token_type == TOKEN_REDIRECT_OUT)
 		return ("Redirect_out");
-	return ("Unkown");
+	return ("Unknown");
 }
 
-void	test_print_tokens(t_list *token_list)
+static void	test_print_tokens(t_list *token_list)
 {
 	t_list	*tmp;
 	t_token	*token;
 
 	tmp = token_list;
-	printf("-------------------------------------------------------------------\n");
-	printf("Type           |Value                                             |\n");
-	printf("-------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------"
+		"-------\n");
+	printf("Type           |Value                                       "
+		"      |\n");
+	printf("------------------------------------------------------------"
+		"-------\n");
 	while (tmp)
 	{
 		token = (t_token *)tmp->content;
-		printf("%-15.15s|%-50.50s|\n", ft_token_type_str(token->type), token->value);
+		printf("%-15.15s|%-50.50s|\n", ft_token_type_str(token->type),
+			token->value);
 		tmp = tmp->next;
 	}
-	printf("-------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------"
+		"-------\n");
+}
+
+void	test_tokens(const char *input, t_list **token_list)
+{
+	if (!ft_strcmp(input, "token_show"))
+		test_print_tokens(*token_list);
+	else if (!ft_strcmp(input, "token_clear"))
+		ft_lstclear(token_list, ft_free_token);
 }

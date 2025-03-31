@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "minishell.h"
+#include <stddef.h>
 
 void	ft_init_prog(t_prog *prog)
 {
 	prog->exit_code = 0;
 	prog->token_list = NULL;
+	prog->command_list = NULL;
 }

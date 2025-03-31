@@ -14,12 +14,12 @@
 # define UTIL_H
 
 // Colors
-#define PINK    "\033[38;5;211m"
-#define YELLOW  "\033[38;5;228m"
-#define GREEN   "\033[38;5;121m"
-#define PURPLE  "\033[38;5;141m"
-# define BOLD	"\033[1m"
-#define RESET   "\033[0m"
+# define PINK "\033[38;5;211m"
+# define YELLOW "\033[38;5;228m"
+# define GREEN "\033[38;5;121m"
+# define PURPLE "\033[38;5;141m"
+# define BOLD "\033[1m"
+# define RESET "\033[0m"
 
 // Debug
 // # define PINK ""
@@ -36,6 +36,6 @@
 # define E_SYNTAX 11
 # define E_QUOTES 12
 
-int		ft_print_error(int errno);
+int	ft_print_error(int errno);
 
 #endif // UTIL_H

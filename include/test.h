@@ -11,12 +11,10 @@
 /* ************************************************************************** */
 
 #ifndef TEST_H
-#define TEST_H
+# define TEST_H
 
-#include <stdlib.h>
-#include "minishell.h"
-#include "jal_print.h"
+# include "minishell.h"
 
-void	test_print_tokens(t_list *token_list);
+void	test_tokens(const char *input, t_list **token_list);
 
-#endif //TEST_H
+#endif // TEST_H

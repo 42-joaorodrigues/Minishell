@@ -1,0 +1,12 @@
+total 1608
+-rw-r--r-- 1 joao-alm 2024_luxembourg 1568461 Mar 13 14:52 en.subject.pdf
+drwxr-xr-x 2 joao-alm 2024_luxembourg      53 Mar 28 13:26 include
+drwxr-xr-x 5 joao-alm 2024_luxembourg      76 Mar 28 13:36 lib
+-rw-r--r-- 1 joao-alm 2024_luxembourg    4112 Mar 28 13:36 Makefile
+-rwxr-xr-x 1 joao-alm 2024_luxembourg   46664 Mar 28 13:36 minishell
+-rw-r--r-- 1 joao-alm 2024_luxembourg      12 Mar 13 14:52 README.md
+drwxr-xr-x 7 joao-alm 2024_luxembourg      72 Mar 19 14:04 src
+drwxr-xr-x 2 joao-alm 2024_luxembourg    4096 Mar 28 13:44 test_results
+-rwxr-xr-x 1 joao-alm 2024_luxembourg    1700 Mar 28 13:43 test_script.sh
+-rwxr-xr-x 1 joao-alm 2024_luxembourg     122 Mar 27 13:31 valgrind.sh
+-rw-r--r-- 1 joao-alm 2024_luxembourg      94 Mar 27 13:31 valgrind.supp

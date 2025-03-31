@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/util.h"
 #include "../../include/minishell.h"
+#include "../../include/util.h"
 #include <unistd.h>
 
 static int	ft_strlen(const char *str)
