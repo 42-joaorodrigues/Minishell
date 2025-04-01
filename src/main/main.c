@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+
 #include "minishell.h"
 #include "util.h"
 #include <readline/history.h>
@@ -30,6 +32,12 @@ static int	ft_read_input(t_prog *prog)
 			add_history(input);
 			if (ft_parser(prog, input) == ERROR)
 				return (ERROR);
+			ft_command_from_token(prog);
+			printf("cmd: %s\n", ((t_command *)prog->command_list->content)->cmd);
+			for (int i = 0; ((t_command *)prog->command_list->content)->args[i]; i++)
+				printf("arg: %s\n", ((t_command *)prog->command_list->content)->args[i]);
+			printf("input_fd: %d\n", ((t_command *)prog->command_list->content)->input_fd);
+			printf("output_fd: %d\n", ((t_command *)prog->command_list->content)->output_fd);
 		}
 		free(input);
 	}

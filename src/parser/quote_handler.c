@@ -6,7 +6,7 @@
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 13:28:09 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/03/28 13:29:24 by joao-alm         ###   ########.fr       */
+/*   Updated: 2025/04/01 08:59:58 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ int	ft_process_quotes(t_token *token, t_prog *prog)
 		return (ERROR);
 	free(token->value);
 	token->value = unquoted;
+	if (token->type == TOKEN_SQUOTE || token->type == TOKEN_DQUOTE)
+		token->type = TOKEN_WORD;
 	return (SUCCESS);
 }

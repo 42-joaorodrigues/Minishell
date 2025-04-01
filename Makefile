@@ -27,9 +27,11 @@ SRC_PARSER	= src/parser/expander.c \
 			  src/parser/quote_handler.c \
 			  src/parser/quote_util.c \
 			  src/parser/token_util.c
-SRC_UTIL	=  src/util/error.c
+SRC_COMMAND	= src/command/command.c \
+			  src/command/command_util.c
+SRC_UTIL	= src/util/error.c
 SRC_TEST	= src/test/test_tokens.c
-SRC			= $(SRC_MAIN) $(SRC_PARSER) $(SRC_UTIL) $(SRC_TEST)
+SRC			= $(SRC_MAIN) $(SRC_PARSER) $(SRC_COMMAND) $(SRC_UTIL) $(SRC_TEST)
 OBJ		= $(SRC:src/%.c=$(O_DIR)/$(notdir %.o))
 
 # Lib Files

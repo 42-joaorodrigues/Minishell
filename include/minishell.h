@@ -6,7 +6,7 @@
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:02:42 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/03/13 15:02:47 by joao-alm         ###   ########.fr       */
+/*   Updated: 2025/04/01 11:57:18 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,37 +52,41 @@ typedef struct s_program
 	int				exit_code;
 }					t_prog;
 
-// main -----------------------------------------------------------------
+// command #####################################################################
 
-// init
+// command ---------------------------------------------------------------------
+int					ft_command_from_token(t_prog *prog);
+// command_util ----------------------------------------------------------------
+t_command			*ft_new_command(char *cmd, char **args, int in_fd,
+	int out_fd);
+void				ft_free_command(void *command);
+
+// main ########################################################################
+
+// init ------------------------------------------------------------------------
 void				ft_init_prog(t_prog *prog);
 
-// parser ---------------------------------------------------------------
+// parser ######################################################################
 
-// parser
+// parser ----------------------------------------------------------------------
 int					ft_parser(t_prog *prog, const char *input);
-// lexer
+// lexer -----------------------------------------------------------------------
 int					ft_lexer(t_list **token_list, const char *input);
-// token_utils
+// token_utils -----------------------------------------------------------------
 t_token_type		ft_get_token_type(char *s);
 t_token				*ft_new_token(const t_token_type type, char *value);
 void				ft_free_token(void *token);
-// quote_handler
+// quote_handler ---------------------------------------------------------------
 int					ft_process_quotes(t_token *token, t_prog *prog);
-// quote_util
+// quote_util ------------------------------------------------------------------
 int					ft_is_quote(char c);
 char				*ft_remove_quotes(char *str, char quote_type);
 int					ft_count_quotes(const char *str, char quote_type);
-// expander
+// expander --------------------------------------------------------------------
 char				*ft_expand_str(const char *str, t_prog *prog);
-// expander utils
+// expander utils --------------------------------------------------------------
 char				*ft_get_env_value(const char *var_name, t_prog *prog);
 int					ft_get_var_name_len(const char *str);
 char				*ft_charjoin(char *s, char c);
-
-// command --------------------------------------------------------------
-
-//	command
-
 
 #endif // MINISHELL_H

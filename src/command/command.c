@@ -6,97 +6,104 @@
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 14:11:21 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/03/29 14:11:24 by joao-alm         ###   ########.fr       */
+/*   Updated: 2025/04/01 10:15:45 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
 
 #include "jal_memory.h"
 #include "jal_string.h"
 #include "minishell.h"
 
-t_command	*ft_new_command(char *cmd, char **args)
+static int		ft_count_command_args(t_list *token_list)
+{
+	int		count;
+
+	count = 0;
+	if (!token_list)
+		return (count);
+	while (token_list && ((t_token *)token_list->content)->type == TOKEN_WORD)
+	{
+		token_list = token_list->next;
+		count++;
+	}
+	return (count);
+}
+
+static char	**ft_get_command_args(t_list **token_list)
+{
+	char	**args;
+	int		i;
+
+	if (!token_list || !*token_list)
+		return (NULL);
+	args = malloc((ft_count_command_args(*token_list) + 1) * sizeof(char *));
+	if (!args)
+		return (NULL);
+	i = -1;
+	while (*token_list && ((t_token *)(*token_list)->content)->type == TOKEN_WORD)
+	{
+		args[++i] = ((t_token *)(*token_list)->content)->value;
+		ft_lstdel_safely(token_list, *token_list, free);
+	}
+	args[++i] = NULL;
+	return (args);
+}
+
+static char	**ft_get_command_fds(t_list **token_list)
 {
 	t_command	*command;
+	t_token		*redirect;
 
-	command = malloc(sizeof(t_command));
-	if (!command)
+
+	if (!token_list)
 		return (NULL);
-	command->cmd = cmd;
-	command->args = args;
 	command->input_fd = STDIN_FILENO;
 	command->output_fd = STDOUT_FILENO;
+	while (*token_list && ((t_token *)(*token_list)->content)->type != TOKEN_PIPE)
+	{
+		if (((t_token *)(*token_list)->content)->type > 3)
+		{
+			redirect = (t_token *)(*token_list)->next->content;
+			if (redirect->type == TOKEN_REDIRECT_IN)
+				command->input_fd = open(redirect->value, O_RDONLY);
+			else if (redirect->type == TOKEN_REDIRECT_OUT)
+				command->output_fd = open(redirect->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			else if (redirect->type == TOKEN_APPEND)
+				command->output_fd = open(redirect->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			//heredoc
+			*token_list = (*token_list)->next->next;
+			continue;
+		}
+		*token_list = (*token_list)->next;
+	}
 	return (command);
 }
 
-void	ft_free_command(void *command)
-{
-	t_command	*current;
-	int			i;
-
-	current = (t_command *)command;
-	if (!current)
-		return ;
-	if (current->cmd)
-		free(current->cmd);
-	i = -1;
-	if (current->args)
-	{
-		while (current->args[++i])
-			free(current->args[i]);
-		free(current->args);
-	}
-	free(current);
-}
-
-t_list  *ft_command_from_token(t_prog *prog)
+int  ft_command_from_token(t_prog *prog)
 {
     t_command   *command;
-    t_list      *current;
-    t_list      *next;
-    t_token     *token;
     char        **args;
-    int         arg_count;
+	int			input_fd;
+	int			output_fd;
 
-    current = prog->token_list;
-    if (!current)
-        return (NULL);
-
-    arg_count = 0;
-    next = current;
-    while (next && ((t_token *)next->content)->type != TOKEN_PIPE)
-    {
-        arg_count++;
-        next = next->next;
-    }
-
-    // Allocate args array
-    args = malloc(sizeof(char *) * (arg_count + 1));
-    if (!args)
-        return (NULL);
-
-    // Fill args array
-    arg_count = 0;
-    while (current && ((t_token *)current->content)->type != TOKEN_PIPE)
-    {
-        token = (t_token *)current->content;
-        args[arg_count++] = ft_strdup(token->value);
-    	next = current->next;
-    	ft_lstdelone(current, ft_free_token);
-        current = next;
-    }
-	prog->token_list = current;
-    args[arg_count] = NULL;
-
-    // Create new command
-    command = ft_new_command(ft_strdup(args[0]), args);
+	args = ft_get_command_args(&prog->token_list);
+	if (!args)
+		return (ERROR);
+	input_fd = STDIN_FILENO;
+	output_fd = STDOUT_FILENO;
+	if (ft_get_command_fds(prog->token_list, &input_fd, &output_fd) != SUCCESS)
+		return (ERROR);
+    command = ft_new_command(ft_strdup(args[0]), args, input_fd, output_fd);
     if (!command)
     {
         ft_free_matrix((void **)args, 0);
-        return (NULL);
+        return (ERROR);
     }
-
-    return (ft_lstnew(command));
+	ft_lstadd_back(&prog->command_list, ft_lstnew(command));
+    return (SUCCESS);
 }
