@@ -1,6 +1,0 @@
-1c1,2
-< /home/joao-alm/42/Minishell/Joao/minishell
----
-> [38;5;228mfavela_shell[0m[38;5;121m ❯ [0mpwd
-> [38;5;228mfavela_shell[0m[38;5;121m ❯ [0m
-\ No newline at end of file

@@ -1,2 +1,0 @@
-[38;5;228mfavela_shell[0m[38;5;121m ❯ [0mecho "Mixed 'quotes' test"
-[38;5;228mfavela_shell[0m[38;5;121m ❯ [0m
