@@ -35,33 +35,18 @@ static char	*ft_token_type_str(const t_token_type token_type)
 	return ("Unknown");
 }
 
-static void	test_print_tokens(t_list *token_list)
+void	test_print_tokens(t_list *token_list)
 {
 	t_list	*tmp;
 	t_token	*token;
 
 	tmp = token_list;
-	printf("------------------------------------------------------------"
-		"-------\n");
-	printf("Type           |Value                                       "
-		"      |\n");
-	printf("------------------------------------------------------------"
-		"-------\n");
-	while (tmp)
+	printf("\n");
+	printf("###Tokens###\n");
+		while (tmp)
 	{
 		token = (t_token *)tmp->content;
-		printf("%-15.15s|%-50.50s|\n", ft_token_type_str(token->type),
-			token->value);
+		printf("type: %s, value: %s\n", ft_token_type_str(token->type), token->value);
 		tmp = tmp->next;
 	}
-	printf("------------------------------------------------------------"
-		"-------\n");
-}
-
-void	test_tokens(const char *input, t_list **token_list)
-{
-	if (!ft_strcmp(input, "token_show"))
-		test_print_tokens(*token_list);
-	else if (!ft_strcmp(input, "token_clear"))
-		ft_lstclear(token_list, ft_free_token);
 }

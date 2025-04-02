@@ -14,18 +14,17 @@
 #include <unistd.h>
 #include "minishell.h"
 
-t_command	*ft_new_command(char *cmd, char **args, const int in_fd,
-	const int out_fd)
+t_command	*ft_init_command()
 {
 	t_command	*command;
 
 	command = malloc(sizeof(t_command));
 	if (!command)
 		return (NULL);
-	command->cmd = cmd;
-	command->args = args;
-	command->input_fd = in_fd;
-	command->output_fd = out_fd;
+	command->cmd = NULL;
+	command->args = NULL;
+	command->input_fd = STDIN_FILENO;
+	command->output_fd = STDOUT_FILENO;
 	return (command);
 }
 

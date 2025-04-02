@@ -36,28 +36,22 @@ int	ft_check_quotes(const char *input)
 	return (SUCCESS);
 }
 
-int	ft_parser(t_prog *prog, const char *input)
+t_list	*ft_parser(const char *input)
 {
+	t_list	*token_list;
 	t_list	*current;
 
+	token_list = NULL;
 	if (ft_check_quotes(input) == ERROR)
-	{
-		ft_print_error(E_QUOTES);
-		return (SUCCESS);
-	}
-	if (ft_strncmp(input, "token", 5) == SUCCESS)
-	{
-		test_tokens(input, &prog->token_list);
-		return (SUCCESS);
-	}
-	if (ft_lexer(&prog->token_list, input) == ERROR)
-		return (prog->exit_code = E_MEM_ALLOC, ERROR);
-	current = prog->token_list;
+		return (NULL);
+	if (ft_lexer(&token_list, input) == ERROR)
+		return (NULL);
+	current = token_list;
 	while (current)
 	{
-		if (ft_process_quotes(current->content, prog) == ERROR)
-			return (prog->exit_code = E_MEM_ALLOC, ERROR);
+		if (ft_process_quotes(current->content) == ERROR)
+			return (NULL);
 		current = current->next;
 	}
-	return (SUCCESS);
+	return (token_list);
 }

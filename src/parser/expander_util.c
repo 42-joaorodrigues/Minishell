@@ -21,14 +21,14 @@ static int	ft_is_var_char(char c)
 	return (ft_isalnum(c) || c == '_');
 }
 
-char	*ft_get_env_value(const char *var_name, t_prog *prog)
+char	*ft_get_env_value(const char *var_name)
 {
 	char	*value;
 
 	if (!var_name || !*var_name)
 		return (ft_strdup(""));
 	if (var_name[0] == '?')
-		return (ft_itoa(prog->exit_code));
+		return (0);
 	if (ft_isdigit(var_name[0]))
 		return (ft_strdup(""));
 	value = getenv(var_name);

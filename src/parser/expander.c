@@ -32,7 +32,7 @@ static char	*ft_join_and_free(char *s1, char *s2)
 	return (result);
 }
 
-static char	*ft_handle_variable(const char *str, int *i, t_prog *prog)
+static char	*ft_handle_variable(const char *str, int *i)
 {
 	char	*var_name;
 	char	*var_value;
@@ -45,13 +45,13 @@ static char	*ft_handle_variable(const char *str, int *i, t_prog *prog)
 		return (ft_strdup("$"));
 	}
 	var_name = ft_extract_var_name(str + *i + 1, var_len);
-	var_value = ft_get_env_value(var_name, prog);
+	var_value = ft_get_env_value(var_name);
 	free(var_name);
 	*i += var_len + 1;
 	return (var_value);
 }
 
-char	*ft_expand_str(const char *str, t_prog *prog)
+char	*ft_expand_str(const char *str)
 {
 	char	*result;
 	char	*temp;
@@ -63,7 +63,7 @@ char	*ft_expand_str(const char *str, t_prog *prog)
 	{
 		if (str[i] == '$')
 		{
-			temp = ft_handle_variable(str, &i, prog);
+			temp = ft_handle_variable(str, &i);
 			result = ft_join_and_free(result, temp);
 			continue ;
 		}

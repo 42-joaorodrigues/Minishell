@@ -18,9 +18,13 @@
 #include <readline/readline.h>
 #include <stdlib.h>
 
-static int	ft_read_input(t_prog *prog)
+#include "test.h"
+
+static int	ft_read_input()
 {
 	char	*input;
+	t_list	*token_list;
+	t_list	*command_list;
 
 	while (1)
 	{
@@ -30,14 +34,14 @@ static int	ft_read_input(t_prog *prog)
 		if (*input)
 		{
 			add_history(input);
-			if (ft_parser(prog, input) == ERROR)
+			token_list = ft_parser(input);
+			if (!token_list)
 				return (ERROR);
-			ft_command_from_token(prog);
-			printf("cmd: %s\n", ((t_command *)prog->command_list->content)->cmd);
-			for (int i = 0; ((t_command *)prog->command_list->content)->args[i]; i++)
-				printf("arg: %s\n", ((t_command *)prog->command_list->content)->args[i]);
-			printf("input_fd: %d\n", ((t_command *)prog->command_list->content)->input_fd);
-			printf("output_fd: %d\n", ((t_command *)prog->command_list->content)->output_fd);
+			test_print_tokens(token_list);
+			command_list = ft_commands_from_tokens(&token_list);
+			if (!command_list)
+				return (ERROR);
+			test_print_commands(command_list);
 		}
 		free(input);
 	}
@@ -53,7 +57,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	(void)envp;
 	ft_init_prog(&prog);
-	if (ft_read_input(&prog) == ERROR)
+	if (ft_read_input() == ERROR)
 	{
 		ft_lstclear(&prog.token_list, ft_free_token);
 		return (ft_print_error(prog.exit_code));

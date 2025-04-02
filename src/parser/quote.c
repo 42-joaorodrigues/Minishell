@@ -22,21 +22,21 @@ static char	ft_quote_type(t_token_type token_type)
 	return ('\0');
 }
 
-int	ft_process_quotes(t_token *token, t_prog *prog)
+int	ft_process_quotes(t_token *token)
 {
 	char	*processed;
 	char	*unquoted;
 
 	if (token->type == TOKEN_WORD)
 	{
-		processed = ft_expand_str(token->value, prog);
+		processed = ft_expand_str(token->value);
 		free(token->value);
 		token->value = processed;
 		return (SUCCESS);
 	}
 	if (token->type == TOKEN_DQUOTE)
 	{
-		processed = ft_expand_str(token->value, prog);
+		processed = ft_expand_str(token->value);
 		unquoted = ft_remove_quotes(processed, ft_quote_type(token->type));
 		free(processed);
 	}

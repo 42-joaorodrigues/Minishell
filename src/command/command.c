@@ -54,16 +54,12 @@ static char	**ft_get_command_args(t_list **token_list)
 	return (args);
 }
 
-static char	**ft_get_command_fds(t_list **token_list)
+static int	ft_get_command_fds(t_list **token_list, t_command *command)
 {
-	t_command	*command;
 	t_token		*redirect;
 
-
 	if (!token_list)
-		return (NULL);
-	command->input_fd = STDIN_FILENO;
-	command->output_fd = STDOUT_FILENO;
+		return (ERROR);
 	while (*token_list && ((t_token *)(*token_list)->content)->type != TOKEN_PIPE)
 	{
 		if (((t_token *)(*token_list)->content)->type > 3)
@@ -76,34 +72,74 @@ static char	**ft_get_command_fds(t_list **token_list)
 			else if (redirect->type == TOKEN_APPEND)
 				command->output_fd = open(redirect->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 			//heredoc
-			*token_list = (*token_list)->next->next;
-			continue;
+			ft_lstdel_safely(token_list, *token_list, ft_free_token);
 		}
-		*token_list = (*token_list)->next;
+		ft_lstdel_safely(token_list, *token_list, ft_free_token);
 	}
-	return (command);
+	return (SUCCESS);
 }
 
-int  ft_command_from_token(t_prog *prog)
+t_command  *ft_get_command(t_list **token_list)
 {
     t_command   *command;
-    char        **args;
-	int			input_fd;
-	int			output_fd;
 
-	args = ft_get_command_args(&prog->token_list);
-	if (!args)
-		return (ERROR);
-	input_fd = STDIN_FILENO;
-	output_fd = STDOUT_FILENO;
-	if (ft_get_command_fds(prog->token_list, &input_fd, &output_fd) != SUCCESS)
-		return (ERROR);
-    command = ft_new_command(ft_strdup(args[0]), args, input_fd, output_fd);
-    if (!command)
+	command = ft_init_command();
+	if (!command)
+		return (NULL);
+	command->args = ft_get_command_args(token_list);
+	if (!command->args)
+		return (ft_free_command(command), NULL);
+	command->cmd = ft_strdup(command->args[0]);
+	if (!command->cmd)
+		return (ft_free_command(command), NULL);
+	if (ft_get_command_fds(token_list, command) != SUCCESS)
+		return (ft_free_command(command), NULL);
+    return (command);
+}
+
+t_list *ft_commands_from_tokens(t_list **token_list)
+{
+    t_list     *command_list;
+    t_command  *command;
+    int        previous_pipe_fd[2];
+    int        pipe_active;
+
+    command_list = NULL;
+    pipe_active = 0;
+
+    if (!token_list)
+        return (NULL);
+
+    while (*token_list)
     {
-        ft_free_matrix((void **)args, 0);
-        return (ERROR);
+        command = ft_get_command(token_list);
+        if (!command)
+            return (ft_lstclear(&command_list, ft_free_command), NULL);
+        if (pipe_active && command->input_fd == STDIN_FILENO)
+            command->input_fd = previous_pipe_fd[0];
+        else if (pipe_active)
+            close(previous_pipe_fd[0]);
+        if (*token_list && ((t_token *)(*token_list)->content)->type == TOKEN_PIPE)
+        {
+            if (pipe(previous_pipe_fd) < 0)
+                return (ft_free_command(command), ft_lstclear(&command_list, ft_free_command), NULL);
+            if (command->output_fd == STDOUT_FILENO)
+                command->output_fd = previous_pipe_fd[1];
+            else
+                close(previous_pipe_fd[1]);
+            pipe_active = 1;
+            ft_lstdel_safely(token_list, *token_list, ft_free_token);
+        }
+        else
+            pipe_active = 0;
+        t_list *new_node = ft_lstnew(command);
+        if (!new_node)
+        {
+            ft_free_command(command);
+            return (ft_lstclear(&command_list, ft_free_command), NULL);
+        }
+        ft_lstadd_back(&command_list, new_node);
     }
-	ft_lstadd_back(&prog->command_list, ft_lstnew(command));
-    return (SUCCESS);
+
+    return (command_list);
 }
