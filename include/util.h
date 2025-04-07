@@ -13,6 +13,8 @@
 #ifndef UTIL_H
 # define UTIL_H
 
+#include "minishell.h"
+
 // Colors
 # define PINK "\033[38;5;211m"
 # define YELLOW "\033[38;5;228m"
@@ -33,9 +35,19 @@
 # define SUCCESS 0
 # define ERROR 1
 # define E_MEM_ALLOC 10
-# define E_SYNTAX 11
-# define E_QUOTES 12
+# define E_QUOTES 101
+# define E_CD_NO_PATH 102
+# define E_CD_INVALID_PATH 103
+# define E_PWD_ARGS 104
 
-int	ft_print_error(int errno);
+// Env
+char	*ft_get_env_value(char *env_ptr);
+char	*ft_get_env_ptr(char **envp, const char *var_name);
+
+// Error
+int		ft_print_error(t_prog *prog, const int errno);
+
+// Quote
+int		ft_check_quotes(const char *input);
 
 #endif // UTIL_H

@@ -10,40 +10,51 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
 #include "minishell.h"
+#include "token.h"
+#include "command.h"
+#include "test.h"
 #include "util.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdlib.h>
 
-#include "test.h"
-
-static int	ft_read_input()
+static int	ft_execute_line(t_prog *prog, char *line)
 {
-	char	*input;
 	t_list	*token_list;
 	t_list	*command_list;
 
+	if (ft_check_quotes(line) == ERROR)
+		return (ft_print_error(prog, E_QUOTES), SUCCESS);
+	token_list = ft_get_token_list(prog, line);
+	if (!token_list)
+		return (ft_print_error(prog, E_MEM_ALLOC));
+	//test_print_tokens(token_list);
+	command_list = ft_commands_from_tokens(&token_list);
+	if (!command_list)
+		return (ERROR);
+	//test_print_commands(command_list);
+	ft_exec_command(prog, &command_list);
+	ft_lstclear(&command_list, ft_free_command);
+	return (SUCCESS);
+}
+
+static int	ft_read_input(t_prog *prog)
+{
+	char	*line;
+
 	while (1)
 	{
-		input = readline(PROMPT);
-		if (!input)
+		line = readline(PROMPT);
+		if (!line)
 			break ;
-		if (*input)
+		if (*line)
 		{
-			add_history(input);
-			token_list = ft_parser(input);
-			if (!token_list)
+			add_history(line);
+			if (ft_execute_line(prog, line) == ERROR)
 				return (ERROR);
-			test_print_tokens(token_list);
-			command_list = ft_commands_from_tokens(&token_list);
-			if (!command_list)
-				return (ERROR);
-			test_print_commands(command_list);
 		}
-		free(input);
+		free(line);
 	}
 	rl_clear_history();
 	return (SUCCESS);
@@ -55,13 +66,10 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	(void)envp;
-	ft_init_prog(&prog);
-	if (ft_read_input() == ERROR)
-	{
-		ft_lstclear(&prog.token_list, ft_free_token);
-		return (ft_print_error(prog.exit_code));
-	}
-	ft_lstclear(&prog.token_list, ft_free_token);
+	prog.last_cmd_exit_code = 0;
+	prog.exit_code = 0;
+	prog.envp = envp;
+	if (ft_read_input(&prog) == ERROR)
+		return (prog.exit_code);
 	return (SUCCESS);
 }

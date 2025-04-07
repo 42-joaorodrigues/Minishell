@@ -10,16 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "jal_string.h"
 #include "test.h"
+#include "token.h"
 #include <stdio.h>
 
 static char	*ft_token_type_str(const t_token_type token_type)
 {
-	if (token_type == TOKEN_SQUOTE)
-		return ("Single Quote");
-	if (token_type == TOKEN_DQUOTE)
-		return ("Double Quote");
 	if (token_type == TOKEN_WORD)
 		return ("Word");
 	if (token_type == TOKEN_PIPE)
@@ -37,16 +33,17 @@ static char	*ft_token_type_str(const t_token_type token_type)
 
 void	test_print_tokens(t_list *token_list)
 {
-	t_list	*tmp;
-	t_token	*token;
+	t_list *tmp;
+	t_token *token;
 
 	tmp = token_list;
 	printf("\n");
 	printf("###Tokens###\n");
-		while (tmp)
+	while (tmp)
 	{
 		token = (t_token *)tmp->content;
-		printf("type: %s, value: %s\n", ft_token_type_str(token->type), token->value);
+		printf("type: %s, value: %s\n", ft_token_type_str(token->type),
+			token->value);
 		tmp = tmp->next;
 	}
 }

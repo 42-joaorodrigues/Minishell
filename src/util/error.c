@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
-#include "../../include/util.h"
+#include "util.h"
 #include <unistd.h>
 
 static int	ft_strlen(const char *str)
@@ -34,13 +33,18 @@ static void	ft_puterror(const char *errstr)
 	write(2, "\n", 1);
 }
 
-int	ft_print_error(const int errno)
+int	ft_print_error(t_prog *prog, const int errno)
 {
 	if (errno == E_MEM_ALLOC)
 		ft_puterror("memory allocation failed");
-	else if (errno == E_SYNTAX)
-		ft_puterror("syntax error");
 	else if (errno == E_QUOTES)
 		ft_puterror("syntax error : unclosed quotes");
-	return (errno);
+	else if (errno == E_CD_NO_PATH)
+		ft_puterror("cd : path required");
+	else if (errno == E_CD_INVALID_PATH)
+		ft_puterror("cd : invalid path");
+	else if (errno == E_PWD_ARGS)
+		ft_puterror("pwd : too much args");
+	prog->exit_code = errno;
+	return (ERROR);
 }

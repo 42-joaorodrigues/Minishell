@@ -13,6 +13,12 @@
 #ifndef JAL_PRINT_H
 # define JAL_PRINT_H
 
+// Put FD
+void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, const int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_putnbr_fd(const int n, const int fd);
+
 /*
 ** ==========================================================
 **                         FT_Printf

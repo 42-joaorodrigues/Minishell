@@ -54,6 +54,10 @@ SRC_MEM			= src/memory/free_matrix.c \
                   src/memory/sort_tab.c
 # Print Files
 SRC_PRINT		= src/print/ft_printf.c \
+				  src/print/ft_putchar_fd.c \
+				  src/print/ft_putendl_fd.c \
+				  src/print/ft_putnbr_fd.c \
+				  src/print/ft_putstr_fd.c \
                   src/print/put_characters.c \
                   src/print/put_numbers.c
 # String Files
@@ -73,7 +77,9 @@ SRC_STRING		= src/string/ft_split.c \
                   src/string/ft_strtrim.c \
                   src/string/ft_substr.c \
                   src/string/strcpy.c \
-                  src/string/strndup.c
+                  src/string/strndup.c \
+                  src/string/strjoin_free.c \
+                  src/string/intlen.c
 
 # Files
 SRC				= $(SRC_CHAR) $(SRC_CONV) $(SRC_GNL) $(SRC_LIST) \

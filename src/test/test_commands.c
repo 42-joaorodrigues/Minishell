@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "command.h"
 #include "test.h"
+#include <stdio.h>
 
 void	test_print_commands(const t_list *command_list)
 {
@@ -26,10 +27,9 @@ void	test_print_commands(const t_list *command_list)
 		printf("###Command[%d]###\n", j++);
 		printf("cmd: %s\n", command->cmd);
 		for (int i = 0; command->args[i]; i++)
-			printf("args[i]: %s\n", command->args[i]);
+			printf("args[%d]: %s\n", i, command->args[i]);
 		printf("input_fd: %d\n", command->input_fd);
 		printf("output_fd: %d\n", command->output_fd);
 		command_list = command_list->next;
 	}
 }
-
