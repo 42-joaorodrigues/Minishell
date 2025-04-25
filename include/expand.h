@@ -1,39 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:02:42 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:18 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/04/25 14:52:41 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/04/25 14:52:43 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXPAND_H
+#define EXPAND_H
 
-# include "env.h"
+#include "token.h"
 
-# define NAME "favela_shell"
-# define PROMPT "favela_shell > "
+int	ft_expand(t_list *token_list, const char **envp);
 
-enum		e_error
-{
-	E_QUOTES = 100,
-	E_CD_NO_PATH,
-	E_CD_INVALID_PATH,
-	E_GETCWD,
-	E_PWD_ARGS
-};
-
-typedef struct s_program
-{
-	t_env	*env;
-	int		last_cmd_exit;
-}			t_prog;
-
-// Read
-int			ft_read_input(char **envp);
-
-#endif // MINISHELL_H
+#endif //EXPAND_H

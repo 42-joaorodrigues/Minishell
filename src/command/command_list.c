@@ -10,18 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "jal_string.h"
 #include "command.h"
+#include "jal_list.h"
+#include "jal_print.h"
+#include "jal_string.h"
 #include "token.h"
 #include "util.h"
 #include <fcntl.h>
+#include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <readline/readline.h>
-
-#include "jal_list.h"
-#include "jal_print.h"
 
 static int	ft_count_command_args(t_list *token_list)
 {
@@ -59,10 +58,10 @@ static char	**ft_get_command_args(t_list **token_list)
 	return (args);
 }
 
-static int ft_handle_heredoc(t_command *command, const char *delimiter)
+static int	ft_handle_heredoc(t_command *command, const char *delimiter)
 {
-	int     pipe_fd[2];
-	char    *line;
+	int		pipe_fd[2];
+	char	*line;
 
 	if (pipe(pipe_fd) == -1)
 		return (ERROR);

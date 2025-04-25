@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
 #include "builtin.h"
 #include "util.h"
+#include <unistd.h>
 
 void	ft_exec_cd(t_prog *prog, const t_command *cd)
 {
@@ -21,9 +20,11 @@ void	ft_exec_cd(t_prog *prog, const t_command *cd)
 	char	new_pwd[1024];
 
 	if (!getcwd(old_pwd, 1024))
-
+		ft_print_error(prog, E_GETCWD);
 	if (!cd->args[1])
 		ft_print_error(prog, E_CD_NO_PATH);
 	else if (chdir(cd->args[1]) != 0)
 		ft_print_error(prog, E_CD_INVALID_PATH);
+	if (!getcwd(new_pwd, 1024))
+		ft_print_error(prog, E_GETCWD);
 }

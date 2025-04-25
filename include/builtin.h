@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
-#define BUILTIN_H
+# define BUILTIN_H
 
-#include "minishell.h"
-#include "command.h"
+# include "command.h"
+# include "minishell.h"
 
 int		ft_is_builtin(const char *cmd);
 int		ft_exec_builtin(t_prog *prog, const t_command *command);
@@ -23,4 +23,4 @@ void	ft_exec_echo(const t_command *cmd);
 void	ft_exec_cd(t_prog *prog, const t_command *cd);
 int		ft_exec_pwd(t_prog *prog, const t_command *cmd);
 
-#endif //BUILTIN_H
+#endif // BUILTIN_H

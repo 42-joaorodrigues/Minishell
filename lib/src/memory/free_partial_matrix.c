@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_free_matrix_pos.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/26 17:14:04 by joao-alm          #+#    #+#             */
-/*   Updated: 2024/10/26 17:14:04 by joao-alm         ###   ########.fr       */
+/*   Created: 2024/11/16 13:06:31 by joao-alm          #+#    #+#             */
+/*   Updated: 2024/11/16 13:06:31 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "jal_list.h"
-#include <stdlib.h>
+#include "jal_memory.h"
 
 /**
- * Creates a new List Element with the given content.
+ * Frees the matrix lines from the given array to 0.\n
+ * Afterward frees matrix pointer itself.
  *
- * @param content Content of the Node to create.
- * @return Returns a new Node of the list with the given content.
+ * @param matrix Matrix to free.
+ * @param index Index to start freeing from.
  */
-t_list	*ft_lstnew(void	*content)
+void	ft_free_partial_matrix(void **matrix, int index)
 {
-	t_list	*new_elem;
-
-	new_elem = (t_list *)malloc(sizeof(t_list));
-	if (!new_elem)
-		return (NULL);
-	new_elem->content = content;
-	new_elem->next = NULL;
-	return (new_elem);
+	if (!matrix)
+		return ;
+	while (index >= 0)
+		free(matrix[index--]);
+	free(matrix);
+	matrix = NULL;
 }

@@ -28,6 +28,10 @@ static char	*ft_token_type_str(const t_token_type token_type)
 		return ("Redirect_in");
 	if (token_type == TOKEN_REDIRECT_OUT)
 		return ("Redirect_out");
+	if (token_type == TOKEN_SQUOTE)
+		return ("Single_quote");
+	if (token_type == TOKEN_DQUOTE)
+		return ("Double_quote");
 	return ("Unknown");
 }
 

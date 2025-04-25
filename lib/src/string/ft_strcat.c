@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:02:42 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:18 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/04/14 16:17:05 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/04/14 16:17:09 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "jal_string.h"
 
-# include "env.h"
-
-# define NAME "favela_shell"
-# define PROMPT "favela_shell > "
-
-enum		e_error
+char *ft_strcat(char *dest, const char *src)
 {
-	E_QUOTES = 100,
-	E_CD_NO_PATH,
-	E_CD_INVALID_PATH,
-	E_GETCWD,
-	E_PWD_ARGS
-};
+	int i;
+	int j;
 
-typedef struct s_program
-{
-	t_env	*env;
-	int		last_cmd_exit;
-}			t_prog;
-
-// Read
-int			ft_read_input(char **envp);
-
-#endif // MINISHELL_H
+	i = 0;
+	while (dest[i] != '\0')
+		i++;
+	j = 0;
+	while (src[j] != '\0')
+	{
+		dest[i + j] = src[j];
+		j++;
+	}
+	dest[i + j] = '\0';
+	return (dest);
+}

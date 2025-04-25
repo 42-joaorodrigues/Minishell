@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #ifndef COMMAND_H
-#define COMMAND_H
+# define COMMAND_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 typedef struct s_command
 {
@@ -32,4 +32,4 @@ t_list		*ft_commands_from_tokens(t_list **token_list);
 t_command	*ft_init_command(void);
 void		ft_free_command(void *command);
 
-#endif //COMMAND_H
+#endif // COMMAND_H

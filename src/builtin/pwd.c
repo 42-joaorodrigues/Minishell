@@ -10,12 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "builtin.h"
 #include "jal_print.h"
 #include "util.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int	ft_exec_pwd(t_prog *prog, const t_command *cmd)
 {

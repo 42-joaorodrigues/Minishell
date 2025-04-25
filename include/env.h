@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   environment.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:02:42 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:18 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/04/12 13:12:18 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/04/12 13:12:24 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef ENV_H
+# define ENV_H
 
-# include "env.h"
+# define EXTRA_SLOTS 32
 
-# define NAME "favela_shell"
-# define PROMPT "favela_shell > "
-
-enum		e_error
+typedef struct s_env
 {
-	E_QUOTES = 100,
-	E_CD_NO_PATH,
-	E_CD_INVALID_PATH,
-	E_GETCWD,
-	E_PWD_ARGS
-};
+	char	**array;
+	int		count;
+	int		capacity;
+}			t_env;
 
-typedef struct s_program
-{
-	t_env	*env;
-	int		last_cmd_exit;
-}			t_prog;
+int			ft_init_env(t_env *env, char **envp);
+int			ft_set_env(t_env *env, const char *key, const char *value);
+const char	*ft_get_env(const char **envp, const char *key);
+void		ft_unset_env(t_env *env, const char *key);
 
-// Read
-int			ft_read_input(char **envp);
-
-#endif // MINISHELL_H
+#endif // ENV_H

@@ -1,0 +1,29 @@
+favela_shell > echo $USER
+
+###Tokens###
+type: Word, value: echo
+type: Word, value: $USER
+
+###Tokens###
+type: Word, value: echo
+type: Word, value: joao-alm
+favela_shell > echo '$USER'
+
+###Tokens###
+type: Word, value: echo
+type: Single_quote, value: '$USER'
+
+###Tokens###
+type: Word, value: echo
+type: Single_quote, value: $USER'
+favela_shell > echo "'$USER'"
+
+###Tokens###
+type: Word, value: echo
+type: Double_quote, value: "'$USER'"
+
+###Tokens###
+type: Word, value: echo
+type: Double_quote, value: 'joao-alm'"
+
+rn I only have the Token and Expansion working for my Minishell project. It prints after every line input, first without expansion and second with.

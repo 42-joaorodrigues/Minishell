@@ -13,9 +13,9 @@
 #ifndef TEST_H
 # define TEST_H
 
-#include "minishell.h"
+# include "jal_list.h"
 
 void	test_print_tokens(t_list *token_list);
-void	test_print_commands(const t_list *command_list);
+// void	test_print_commands(const t_list *command_list);
 
 #endif // TEST_H

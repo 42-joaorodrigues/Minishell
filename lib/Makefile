@@ -23,6 +23,8 @@ SRC_CONV		= src/conversion/atoll_valid.c \
 				  src/conversion/ft_atoi.c \
 				  src/conversion/ft_itoa.c \
 				  src/conversion/ft_tolower.c
+# Error Files
+SRC_ERROR		= src/error/error.c
 # GetNextLine Files
 SRC_GNL			= src/gnl/get_next_line.c \
                   src/gnl/get_next_line_utils.c
@@ -43,6 +45,7 @@ SRC_LIST		= src/list/ft_lstadd_back_bonus.c \
                   src/list/lstnew_int.c
 # Memory Files
 SRC_MEM			= src/memory/free_matrix.c \
+				  src/memory/free_partial_matrix.c \
                   src/memory/ft_bzero.c \
                   src/memory/ft_calloc.c \
                   src/memory/ft_memchr.c \
@@ -76,14 +79,17 @@ SRC_STRING		= src/string/ft_split.c \
                   src/string/ft_strrchr.c \
                   src/string/ft_strtrim.c \
                   src/string/ft_substr.c \
+                  src/string/intlen.c \
+                  src/string/strarrcount.c \
+                  src/string/strarrdup.c \
                   src/string/strcpy.c \
-                  src/string/strndup.c \
+                  src/string/ft_strcat.c \
                   src/string/strjoin_free.c \
-                  src/string/intlen.c
+                  src/string/strndup.c \
 
 # Files
 SRC				= $(SRC_CHAR) $(SRC_CONV) $(SRC_GNL) $(SRC_LIST) \
-				  $(SRC_MEM) $(SRC_PRINT) $(SRC_STRING)
+				  $(SRC_MEM) $(SRC_PRINT) $(SRC_STRING) $(SRC_ERROR)
 INC				= -I include
 OBJ				= $(SRC:src/%.c=$(O_DIR)/%.o)
 

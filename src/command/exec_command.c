@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "command.h"
 #include "builtin.h"
+#include "command.h"
 
 void	ft_exec_command(t_prog *prog, t_list **command_list)
 {
-	t_list		*current;
-	t_command	*command;
+	t_list *current;
+	t_command *command;
 
 	(void)prog;
 	current = *command_list;

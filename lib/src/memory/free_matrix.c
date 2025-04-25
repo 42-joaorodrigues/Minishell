@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_matrix_pos.c                               :+:      :+:    :+:   */
+/*   free_nul_ter_matrix.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 13:06:31 by joao-alm          #+#    #+#             */
-/*   Updated: 2024/11/16 13:06:31 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/04/14 15:10:41 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/04/14 15:10:59 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "jal_memory.h"
+#include <stdlib.h>
 
-/**
- * Frees the matrix lines from the given array to 0.\n
- * Afterward frees matrix pointer itself.
- *
- * @param matrix Matrix to free.
- * @param index Index to start freeing from.
- */
-void	ft_free_matrix(void **matrix, int index)
+void	ft_free_matrix(void **matrix)
 {
-	while (index >= 0)
-		free(matrix[index--]);
+	int	i;
+
+	if (!matrix)
+		return ;
+	i = 0;
+	while (matrix[i])
+		free(matrix[i++]);
 	free(matrix);
-	matrix = NULL;
 }

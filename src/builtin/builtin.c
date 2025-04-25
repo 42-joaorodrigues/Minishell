@@ -14,12 +14,11 @@
 #include "jal_string.h"
 #include "util.h"
 
-int ft_is_builtin(const char *cmd)
+int	ft_is_builtin(const char *cmd)
 {
-	return (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd")
-		|| !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export")
-		|| !ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "env")
-		|| !ft_strcmp(cmd, "exit"));
+	return (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") || !ft_strcmp(cmd,
+			"pwd") || !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset")
+		|| !ft_strcmp(cmd, "env") || !ft_strcmp(cmd, "exit"));
 }
 
 int	ft_exec_builtin(t_prog *prog, const t_command *command)

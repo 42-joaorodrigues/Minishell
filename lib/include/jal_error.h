@@ -1,39 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   jal_error.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:02:42 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:18 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/04/15 17:37:17 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/04/15 17:37:23 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef JAL_ERROR_H
+#define JAL_ERROR_H
 
-# include "env.h"
+# define ERROR_PINK "\033[38;5;211m"
+# define ERROR_RESET "\033[0m"
 
-# define NAME "favela_shell"
-# define PROMPT "favela_shell > "
+# define E_NOMEM 50
 
-enum		e_error
-{
-	E_QUOTES = 100,
-	E_CD_NO_PATH,
-	E_CD_INVALID_PATH,
-	E_GETCWD,
-	E_PWD_ARGS
-};
+int	*ft_exit_code(void);
+int	ft_error(const char *err_str, int err_no);
 
-typedef struct s_program
-{
-	t_env	*env;
-	int		last_cmd_exit;
-}			t_prog;
-
-// Read
-int			ft_read_input(char **envp);
-
-#endif // MINISHELL_H
+#endif //JAL_ERROR_H

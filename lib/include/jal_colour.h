@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   colour.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:02:42 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:18 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/04/15 16:18:28 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/04/15 16:18:44 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef JAL_COLOUR_H
+#define JAL_COLOUR_H
 
-# include "env.h"
+// Colours
+# define PINK "\033[38;5;211m"
+# define YELLOW "\033[38;5;228m"
+# define GREEN "\033[38;5;121m"
+# define PURPLE "\033[38;5;141m"
+# define BOLD "\033[1m"
+# define RESET "\033[0m"
 
-# define NAME "favela_shell"
-# define PROMPT "favela_shell > "
+// Debug
+// # define PINK ""
+// # define RESET ""
+// # define YELLOW ""
+// # define GREEN ""
+// # define PURPLE ""
+// # define BOLD ""
 
-enum		e_error
-{
-	E_QUOTES = 100,
-	E_CD_NO_PATH,
-	E_CD_INVALID_PATH,
-	E_GETCWD,
-	E_PWD_ARGS
-};
-
-typedef struct s_program
-{
-	t_env	*env;
-	int		last_cmd_exit;
-}			t_prog;
-
-// Read
-int			ft_read_input(char **envp);
-
-#endif // MINISHELL_H
+#endif //JAL_COLOUR_H

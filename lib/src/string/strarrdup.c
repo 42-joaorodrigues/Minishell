@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   str_array_dup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/26 17:14:04 by joao-alm          #+#    #+#             */
-/*   Updated: 2024/10/26 17:14:04 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/04/10 14:12:16 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/04/10 14:12:19 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "jal_list.h"
-#include <stdlib.h>
+# include "jal_string.h"
 
-/**
- * Creates a new List Element with the given content.
- *
- * @param content Content of the Node to create.
- * @return Returns a new Node of the list with the given content.
- */
-t_list	*ft_lstnew(void	*content)
+char	**ft_strarrdup(char **src)
 {
-	t_list	*new_elem;
+	char	**dup;
+	size_t	i;
 
-	new_elem = (t_list *)malloc(sizeof(t_list));
-	if (!new_elem)
+	if (!src)
 		return (NULL);
-	new_elem->content = content;
-	new_elem->next = NULL;
-	return (new_elem);
+	dup = malloc((ft_strarrcount(src) + 1) * sizeof(char *));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (src[i])
+	{
+		dup[i] = ft_strdup(src[i]);
+		if (!dup[i])
+		{
+			while (i > 0)
+				free(dup[--i]);
+			free(dup);
+			return (NULL);
+		}
+		i++;
+	}
+	dup[i] = NULL;
+	return (dup);
 }

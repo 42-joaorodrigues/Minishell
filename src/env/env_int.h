@@ -1,39 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env_private.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:02:42 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:18 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/04/15 14:33:52 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/04/15 14:33:57 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef ENV_PRIVATE_H
+#define ENV_PRIVATE_H
 
-# include "env.h"
+#include "env.h"
 
-# define NAME "favela_shell"
-# define PROMPT "favela_shell > "
+int		ft_key_matches(const char *var, const char *key);
+int		ft_add_slots_env(t_env *env);
+char	*ft_create_env_entry(const char *key, const char *value);
 
-enum		e_error
-{
-	E_QUOTES = 100,
-	E_CD_NO_PATH,
-	E_CD_INVALID_PATH,
-	E_GETCWD,
-	E_PWD_ARGS
-};
-
-typedef struct s_program
-{
-	t_env	*env;
-	int		last_cmd_exit;
-}			t_prog;
-
-// Read
-int			ft_read_input(char **envp);
-
-#endif // MINISHELL_H
+#endif //ENV_PRIVATE_H

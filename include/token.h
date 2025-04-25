@@ -10,18 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKEN_C_H
-# define TOKEN_C_H
+#ifndef TOKEN_H
+# define TOKEN_H
 
-#include "minishell.h"
-
-typedef struct s_expand
-{
-	char					*src;
-	int						i;
-	char					*dest;
-	int						j;
-}							t_expand;
+# include "jal_list.h"
 
 typedef enum e_token_type
 {
@@ -30,34 +22,23 @@ typedef enum e_token_type
 	TOKEN_REDIRECT_IN,
 	TOKEN_REDIRECT_OUT,
 	TOKEN_APPEND,
-	TOKEN_HEREDOC
-}							t_token_type;
+	TOKEN_HEREDOC,
+	TOKEN_SQUOTE,
+	TOKEN_DQUOTE
+}					t_token_type;
 
 typedef struct s_token
 {
-	t_token_type			type;
-	char					*value;
-}							t_token;
+	t_token_type	type;
+	char			*value;
+}					t_token;
 
-// Expand
-char						*ft_expand(const t_prog *prog, char *src);
+// Token_List
+t_list				*ft_token_list(const char *str);
 
-// Expander Utils
-char						*ft_get_var_value(const t_prog *prog,
-								const char *var_name);
-char						*ft_extract_var_name(const char *str, int *i);
+// Util
+t_token_type		ft_token_type(const char *value);
+t_list				*ft_lstnew_token(t_token_type type, char *value);
+void				ft_free_token(void *token);
 
-// Char Utils
-int							ft_is_symbol(const char c);
-int							ft_is_quote(const char c);
-int							ft_is_word_character(const char c);
-
-// Token Utils
-t_token_type				ft_get_token_type(char *s);
-t_token						*ft_new_token(const t_token_type type, char *value);
-void						ft_free_token(void *token);
-
-// Token
-t_list						*ft_get_token_list(const t_prog *prog, char *input);
-
-#endif // TOKEN_C_H
+#endif // TOKEN_H

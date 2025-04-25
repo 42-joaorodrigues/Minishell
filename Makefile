@@ -25,18 +25,15 @@ SRC_BUILTIN		= src/builtin/builtin.c \
 SRC_COMMAND		= src/command/command_list.c \
 				  src/command/command_list_util.c \
 				  src/command/exec_command.c
-SRC_MAIN		= src/main/main.c
-SRC_TEST		= src/test/test_tokens.c \
-				  src/test/test_commands.c
-SRC_TOKEN		= src/token/expander.c \
-				  src/token/expander_util.c \
-				  src/token/token.c \
-				  src/token/token_char_util.c \
-				  src/token/token_util.c
-SRC_UTIL		= src/util/env_util.c \
-				  src/util/error.c \
-				  src/util/quote_util.c
-SRC				= $(SRC_BUILTIN) $(SRC_COMMAND) $(SRC_MAIN) $(SRC_TEST) $(SRC_TOKEN) $(SRC_UTIL)
+SRC_ENV			= src/env/env.c \
+				  src/env/env_util.c
+SRC_EXPAND		= src/expand/expand.c
+SRC_MAIN		= src/main/main.c \
+				  src/main/read.c
+SRC_TEST		= src/test/test_tokens.c
+SRC_TOKEN		= src/token/token_list.c \
+				  src/token/util.c
+SRC				= $(SRC_ENV) $(SRC_EXPAND) $(SRC_MAIN) $(SRC_TEST) $(SRC_TOKEN) $(SRC_UTIL)
 OBJ				= $(SRC:src/%.c=$(O_DIR)/$(notdir %.o))
 
 # Lib Files

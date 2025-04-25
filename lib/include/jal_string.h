@@ -6,7 +6,7 @@
 /*   By: joao-alm <joao-alm@student.42luxembourg.>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 21:05:08 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/01/08 16:08:51 by joao-alm         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:19:08 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 char	**ft_split(const char *s, char c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strcpy(char *dest, const char *src);
+char	*ft_strcat(char *dest, const char *src);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strdup(const char *s);
 char	*ft_strndup(const char *str, size_t n);
@@ -32,8 +33,10 @@ char	*ft_strnstr(const char *big, const char *little,
 			size_t len);
 char	*ft_strrchr(const char *str, int c);
 char	*ft_strtrim(char const *s1, char const *set);
+size_t	ft_intlen(int i);
+size_t	ft_strarrcount(char **strarr);
+char	**ft_strarrdup(char **src);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin_free(char *s1, char *s2, const int to_free);
-size_t	ft_intlen(int i);
 
 #endif //JAL_STRING_H
