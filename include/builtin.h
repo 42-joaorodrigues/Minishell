@@ -14,13 +14,14 @@
 # define BUILTIN_H
 
 # include "command.h"
-# include "minishell.h"
+#include "env.h"
 
 int		ft_is_builtin(const char *cmd);
-int		ft_exec_builtin(t_prog *prog, const t_command *command);
+void	ft_exec_builtin(const t_command *command, t_env *env);
 
-void	ft_exec_echo(const t_command *cmd);
-void	ft_exec_cd(t_prog *prog, const t_command *cd);
-int		ft_exec_pwd(t_prog *prog, const t_command *cmd);
+void	ft_echo(const t_command *command);
+void	ft_cd(const t_command *cd, t_env *env);
+void	ft_pwd(const t_command *cmd, t_env *env);
+void	ft_export(const t_command *command, t_env *env);
 
 #endif // BUILTIN_H

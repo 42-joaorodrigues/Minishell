@@ -14,6 +14,8 @@
 #include "token.h"
 #include <stdio.h>
 
+#include "jal_colour.h"
+
 static char	*ft_token_type_str(const t_token_type token_type)
 {
 	if (token_type == TOKEN_WORD)
@@ -35,19 +37,14 @@ static char	*ft_token_type_str(const t_token_type token_type)
 	return ("Unknown");
 }
 
-void	test_print_tokens(t_list *token_list)
+void	test_print_tokens(t_token *token)
 {
-	t_list *tmp;
-	t_token *token;
-
-	tmp = token_list;
-	printf("\n");
-	printf("###Tokens###\n");
-	while (tmp)
+	printf(GREEN "###Tokens###\n" RESET);
+	while (token)
 	{
-		token = (t_token *)tmp->content;
-		printf("type: %s, value: %s\n", ft_token_type_str(token->type),
+		printf(YELLOW "type:" RESET " %-13s" YELLOW "value:" RESET " %s\n", ft_token_type_str(token->type),
 			token->value);
-		tmp = tmp->next;
+		token = token->next;
 	}
+	printf(GREEN "############" RESET "\n");
 }

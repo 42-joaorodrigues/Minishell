@@ -13,32 +13,32 @@
 #ifndef TOKEN_H
 # define TOKEN_H
 
-# include "jal_list.h"
-
-typedef enum e_token_type
+typedef enum		e_token_type
 {
 	TOKEN_WORD,
+	TOKEN_SQUOTE,
+	TOKEN_DQUOTE,
 	TOKEN_PIPE,
 	TOKEN_REDIRECT_IN,
 	TOKEN_REDIRECT_OUT,
 	TOKEN_APPEND,
-	TOKEN_HEREDOC,
-	TOKEN_SQUOTE,
-	TOKEN_DQUOTE
+	TOKEN_HEREDOC
 }					t_token_type;
 
-typedef struct s_token
+typedef struct		s_token
 {
 	t_token_type	type;
 	char			*value;
+	struct s_token	*next;
 }					t_token;
 
 // Token_List
-t_list				*ft_token_list(const char *str);
+t_token				*ft_token(const char *str);
 
 // Util
 t_token_type		ft_token_type(const char *value);
-t_list				*ft_lstnew_token(t_token_type type, char *value);
-void				ft_free_token(void *token);
+t_token				*ft_new_token(t_token_type type, char *value);
+void				ft_token_add_back(t_token **head, t_token *new);
+void				ft_clear_token(t_token *head);
 
 #endif // TOKEN_H

@@ -10,21 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
-#include "command.h"
+#include "../../include/builtin.h"
+#include "../../include/command.h"
 
-void	ft_exec_command(t_prog *prog, t_list **command_list)
+void	ft_exec(t_command *command, t_env *env)
 {
-	t_list *current;
-	t_command *command;
-
-	(void)prog;
-	current = *command_list;
-	while (current)
+	if (!command || !env)
+		return ;
+	while (command)
 	{
-		command = (t_command *)current->content;
 		if (ft_is_builtin(command->cmd))
-			ft_exec_builtin(prog, command);
-		current = current->next;
+			ft_exec_builtin(command, env);
+		command = command->next;
 	}
 }

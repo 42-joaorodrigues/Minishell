@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   main.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -24,7 +24,8 @@ enum		e_error
 	E_CD_NO_PATH,
 	E_CD_INVALID_PATH,
 	E_GETCWD,
-	E_PWD_ARGS
+	E_PWD_ARGS,
+	E_OPEN
 };
 
 typedef struct s_program
@@ -34,6 +35,6 @@ typedef struct s_program
 }			t_prog;
 
 // Read
-int			ft_read_input(char **envp);
+int			ft_read_input(t_env *env);
 
 #endif // MINISHELL_H

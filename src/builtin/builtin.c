@@ -12,7 +12,6 @@
 
 #include "builtin.h"
 #include "jal_string.h"
-#include "util.h"
 
 int	ft_is_builtin(const char *cmd)
 {
@@ -21,13 +20,14 @@ int	ft_is_builtin(const char *cmd)
 		|| !ft_strcmp(cmd, "env") || !ft_strcmp(cmd, "exit"));
 }
 
-int	ft_exec_builtin(t_prog *prog, const t_command *command)
+void	ft_exec_builtin(const t_command *command, t_env *env)
 {
 	if (!ft_strcmp(command->cmd, "echo"))
-		ft_exec_echo(command);
+		ft_echo(command);
 	if (!ft_strcmp(command->cmd, "cd"))
-		ft_exec_cd(prog, command);
+		ft_cd(command, env);
 	if (!ft_strcmp(command->cmd, "pwd"))
-		ft_exec_pwd(prog, command);
-	return (ERROR);
+		ft_pwd(command, env);
+	if (!ft_strcmp(command->cmd, "export"))
+		ft_export(command, env);
 }

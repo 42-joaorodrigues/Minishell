@@ -14,25 +14,25 @@
 #include "jal_print.h"
 #include "jal_string.h"
 
-void	ft_exec_echo(const t_command *cmd)
+void	ft_echo(const t_command *command)
 {
 	int	i;
 	int	line_jump;
 
 	i = 1;
 	line_jump = 1;
-	while (!ft_strncmp(cmd->args[i], "-n", 2))
+	while (!ft_strncmp(command->args[i], "-n", 2))
 	{
 		line_jump = 0;
 		i++;
 	}
-	while (cmd->args[i])
+	while (command->args[i])
 	{
-		ft_putstr_fd(cmd->args[i], cmd->output_fd);
-		if (cmd->args[i + 1])
-			ft_putstr_fd(" ", cmd->output_fd);
+		ft_putstr_fd(command->args[i], command->fd_out);
+		if (command->args[i + 1])
+			ft_putstr_fd(" ", command->fd_out);
 		i++;
 	}
 	if (line_jump)
-		ft_putstr_fd("\n", cmd->output_fd);
+		ft_putstr_fd("\n", command->fd_out);
 }

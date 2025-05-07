@@ -21,7 +21,7 @@ static int	ft_trim_quotes(char **str)
 {
 	char	*trimmed;
 
-	trimmed = ft_strndup(*str + 1, ft_strlen(*str) - 1);
+	trimmed = ft_strndup(*str + 1, ft_strlen(*str) - 2);
 	if (!trimmed)
 		return (ft_error("memory allocation failed", E_NOMEM));
 	free(*str);
@@ -84,21 +84,20 @@ static char *ft_expand_value(char *str, const char **envp)
     return (expanded);
 }
 
-int ft_expand(t_list *token_list, const char **envp)
+int ft_expand(t_token *token, const char **envp)
 {
-    t_list *current;
-    t_token *token;
     char *expanded;
 
-    if (!token_list || !envp)
+    if (!token || !envp)
         return (1);
-    current = token_list;
-    while (current)
+    while (token)
     {
-        token = (t_token *)current->content;
         if (token->type == TOKEN_SQUOTE || token->type == TOKEN_DQUOTE)
+        {
             if (ft_trim_quotes(&token->value) != 0)
                 return (*ft_exit_code());
+            token->type = TOKEN_WORD;
+        }
         if (token->type == TOKEN_DQUOTE || token->type == TOKEN_WORD)
         {
             expanded = ft_expand_value(token->value, envp);
@@ -107,7 +106,7 @@ int ft_expand(t_list *token_list, const char **envp)
             free(token->value);
             token->value = expanded;
         }
-        current = current->next;
+        token = token->next;
     }
     return (0);
 }

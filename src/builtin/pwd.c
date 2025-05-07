@@ -12,14 +12,13 @@
 
 #include "builtin.h"
 #include "jal_print.h"
-#include "util.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include "jal_error.h"
+#include "minishell.h"
 
-int	ft_exec_pwd(t_prog *prog, const t_command *cmd)
+void	ft_pwd(const t_command *cmd, t_env *env)
 {
 	if (cmd->args[1])
-		return (ft_print_error(prog, E_PWD_ARGS));
-	ft_putendl_fd(getenv("PWD"), cmd->output_fd);
-	return (SUCCESS);
+		ft_error("too many arguments", E_PWD_ARGS);
+	ft_putendl_fd((char *)ft_get_env((const char **)env->array, "PWD"), cmd->fd_out);
 }

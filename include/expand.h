@@ -15,6 +15,6 @@
 
 #include "token.h"
 
-int	ft_expand(t_list *token_list, const char **envp);
+int	ft_expand(t_token *token, const char **envp);
 
 #endif //EXPAND_H

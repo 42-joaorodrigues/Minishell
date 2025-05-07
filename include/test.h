@@ -13,9 +13,10 @@
 #ifndef TEST_H
 # define TEST_H
 
-# include "jal_list.h"
+#include "command.h"
+#include "token.h"
 
-void	test_print_tokens(t_list *token_list);
-// void	test_print_commands(const t_list *command_list);
+void	test_print_tokens(t_token *token);
+void	test_print_commands(t_command *command);
 
 #endif // TEST_H

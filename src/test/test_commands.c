@@ -14,22 +14,23 @@
 #include "test.h"
 #include <stdio.h>
 
-void	test_print_commands(const t_list *command_list)
+#include "jal_colour.h"
+
+void	test_print_commands(t_command *command)
 {
-	t_command	*command;
 	int			j;
 
 	j = 0;
-	while (command_list)
+	while (command)
 	{
-		command = (t_command *)command_list->content;
 		printf("\n");
-		printf("###Command[%d]###\n", j++);
-		printf("cmd: %s\n", command->cmd);
+		printf(GREEN "###Command[%d]###\n" RESET, j++);
+		printf(YELLOW "cmd:" RESET " %s\n", command->cmd);
 		for (int i = 0; command->args[i]; i++)
-			printf("args[%d]: %s\n", i, command->args[i]);
-		printf("input_fd: %d\n", command->input_fd);
-		printf("output_fd: %d\n", command->output_fd);
-		command_list = command_list->next;
+			printf(YELLOW "args[%d]:" RESET " %s\n", i, command->args[i]);
+		printf(YELLOW "input_fd:" RESET " %d\n", command->fd_in);
+		printf(YELLOW "output_fd:" RESET " %d\n", command->fd_out);
+		printf(GREEN "###############" RESET "\n");
+		command = command->next;
 	}
 }

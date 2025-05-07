@@ -63,9 +63,8 @@ static char	*ft_extract_word_value(const char *str)
 	return (value);
 }
 
-static t_list	*ft_create_token_node(const char *str, int *i)
+static t_token	*ft_create_token(const char *str, int *i)
 {
-	t_list			*node;
 	char			*value;
 	t_token_type	type;
 
@@ -79,20 +78,16 @@ static t_list	*ft_create_token_node(const char *str, int *i)
 		return (NULL);
 	*i += ft_strlen(value);
 	type = ft_token_type(value);
-	node = ft_lstnew_token(type, value);
-	if (!node)
-		return (free(value), ft_error("memory allocation failed", E_NOMEM),
-			NULL);
-	return (node);
+	return (ft_new_token(type, value));
 }
 
-t_list	*ft_token_list(const char *str)
+t_token	*ft_token(const char *str)
 {
-	t_list *token_list;
-	t_list *new_node;
+	t_token	*head;
+	t_token	*new;
 	int i;
 
-	token_list = NULL;
+	head = NULL;
 	i = 0;
 	while (str[i])
 	{
@@ -100,11 +95,11 @@ t_list	*ft_token_list(const char *str)
 			i++;
 		if (str[i])
 		{
-			new_node = ft_create_token_node(str, &i);
-			if (!new_node)
-				return (ft_lstclear(&token_list, ft_free_token), NULL);
-			ft_lstadd_back(&token_list, new_node);
+			new = ft_create_token(str, &i);
+			if (!new)
+				return (ft_clear_token(head), NULL);
+			ft_token_add_back(&head, new);
 		}
 	}
-	return (token_list);
+	return (head);
 }

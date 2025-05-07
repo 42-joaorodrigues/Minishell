@@ -12,24 +12,25 @@
 
 #ifndef COMMAND_H
 # define COMMAND_H
+#include "token.h"
 
-# include "minishell.h"
 
-typedef struct s_command
+typedef struct			s_command
 {
-	char	*cmd;
-	char	**args;
-	int		input_fd;
-	int		output_fd;
-}			t_command;
-
-void		ft_exec_command(t_prog *prog, t_list **command_list);
+	char				*cmd;
+	char				**args;
+	int					fd_in;
+	int					fd_out;
+	struct s_command	*next;
+}						t_command;
 
 // Command
-t_list		*ft_commands_from_tokens(t_list **token_list);
+t_command				*ft_command(t_token *token);
 
-// Command Utils
-t_command	*ft_init_command(void);
-void		ft_free_command(void *command);
+// Utils
+t_command				*ft_new_command(char *cmd, char **args, int fd_in, int fd_out);
+void					ft_command_add_back(t_command **head, t_command *new);
+void					ft_free_command(t_command *command);
+void					ft_clear_command(t_command *head);
 
 #endif // COMMAND_H

@@ -21,19 +21,22 @@ INC				= -Iinclude
 SRC_BUILTIN		= src/builtin/builtin.c \
 				  src/builtin/cd.c \
 				  src/builtin/echo.c \
-				  src/builtin/pwd.c
-SRC_COMMAND		= src/command/command_list.c \
-				  src/command/command_list_util.c \
-				  src/command/exec_command.c
+				  src/builtin/pwd.c \
+				  src/builtin/export.c
+SRC_COMMAND		= src/command/command.c \
+				  src/command/util.c \
+				  src/command/create.c
 SRC_ENV			= src/env/env.c \
 				  src/env/env_util.c
+SRC_EXEC		= src/exec/exec.c
 SRC_EXPAND		= src/expand/expand.c
-SRC_MAIN		= src/main/main.c \
+SRC_MINISHELL	= src/main/main.c \
 				  src/main/read.c
-SRC_TEST		= src/test/test_tokens.c
-SRC_TOKEN		= src/token/token_list.c \
+SRC_TEST		= src/test/test_tokens.c \
+				  src/test/test_commands.c
+SRC_TOKEN		= src/token/token.c \
 				  src/token/util.c
-SRC				= $(SRC_ENV) $(SRC_EXPAND) $(SRC_MAIN) $(SRC_TEST) $(SRC_TOKEN) $(SRC_UTIL)
+SRC				= $(SRC_BUILTIN) $(SRC_COMMAND) $(SRC_ENV) $(SRC_EXEC) $(SRC_EXPAND) $(SRC_MINISHELL) $(SRC_TEST) $(SRC_TOKEN) $(SRC_UTIL)
 OBJ				= $(SRC:src/%.c=$(O_DIR)/$(notdir %.o))
 
 # Lib Files

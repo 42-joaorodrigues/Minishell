@@ -34,34 +34,55 @@ t_token_type	ft_token_type(const char *value)
 	return (TOKEN_WORD);
 }
 
-t_list	*ft_lstnew_token(const t_token_type type, char *value)
+t_token	*ft_new_token(const t_token_type type, char *value)
 {
-	t_list	*node;
-	t_token	*token;
+	t_token	*new;
 
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->type = type;
-	token->value = value;
-	node = ft_lstnew(token);
-	if (!node)
-	{
-		free(token);
-		ft_error("memory allocation failed", E_NOMEM);
-		return (NULL);
-	}
-	return (node);
+	new = malloc(sizeof(t_token));
+	if (!new)
+		return (ft_error("memory allocation failed", E_NOMEM), NULL);
+	new->type = type;
+	new->value = value;
+	new->next = NULL;
+	return (new);
 }
 
-void	ft_free_token(void *token)
+void	ft_token_add_back(t_token **head, t_token *new)
 {
-	t_token	*curr;
+	t_token	*current;
 
-	curr = (t_token *)token;
-	if (!curr)
+	if (!head || !new)
 		return ;
-	if (curr->value)
-		free(curr->value);
-	free(curr);
+	current = *head;
+	if (current)
+	{
+		while (current && current->next)
+			current = current->next;
+		current->next = new;
+	}
+	else
+		*head = new;
 }
+
+void	ft_free_token(t_token *token)
+{
+	if (!token)
+		return ;
+	if (token->value)
+		free(token->value);
+	free(token);
+}
+
+void	ft_clear_token(t_token *head)
+{
+	t_token	*next;
+
+	while (head)
+	{
+		next = head->next;
+		ft_free_token(head);
+		head = next;
+	}
+}
+
+
