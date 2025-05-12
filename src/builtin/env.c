@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: joao-alm <joao-alm@student.42luxembourg.>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 15:05:27 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/04/07 15:05:29 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/05/12 19:58:02 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/05/12 19:58:05 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-#include "jal_print.h"
-#include "jal_error.h"
-#include "minishell.h"
 #include "status.h"
 
-int	ft_pwd(const t_command *cmd, t_env *env)
+int	ft_env(const t_command *cmd, t_env *env)
 {
-	ft_putendl_fd((char *)ft_get_env((const char **)env->array, "PWD"), cmd->fd_out);
+	if (cmd->args[1])
+		return (ft_status("env: too many arguments", S_ENV_ARGS));
+	ft_print_env_fd(env->array, cmd->fd_out);
 	*ft_status_code() = 0;
 	return (0);
 }

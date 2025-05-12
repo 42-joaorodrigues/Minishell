@@ -20,7 +20,7 @@ int	ft_is_builtin(const char *cmd)
 		|| !ft_strcmp(cmd, "env") || !ft_strcmp(cmd, "exit"));
 }
 
-void	ft_exec_builtin(const t_command *command, t_env *env)
+void	ft_exec_builtin(t_command *command, t_env *env)
 {
 	if (!ft_strcmp(command->cmd, "echo"))
 		ft_echo(command);
@@ -30,4 +30,10 @@ void	ft_exec_builtin(const t_command *command, t_env *env)
 		ft_pwd(command, env);
 	if (!ft_strcmp(command->cmd, "export"))
 		ft_export(command, env);
+	if (!ft_strcmp(command->cmd, "unset"))
+		ft_unset(command, env);
+	if (!ft_strcmp(command->cmd, "env"))
+		ft_env(command, env);
+	if (!ft_strcmp(command->cmd, "exit"))
+		ft_exit(command, env);
 }

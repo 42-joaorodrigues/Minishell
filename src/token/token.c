@@ -15,6 +15,8 @@
 #include "minishell.h"
 #include "token.h"
 
+#include "status.h"
+
 static char	*ft_extract_symbol_value(const char *str)
 {
 	char	*value;
@@ -40,7 +42,7 @@ static char	*ft_extract_quoted_value(const char *str)
 	while (*(str + i) && *(str + i) != quote)
 		i++;
 	if (*(str + i) == '\0')
-		return (ft_error("unclosed quotes", E_QUOTES), NULL);
+		return (ft_status("syntax: unclosed quotes", S_QUOTES), NULL);
 	value = ft_strndup(str, i + 1);
 	if (!value)
 		ft_error("memory allocation failed", E_NOMEM);

@@ -12,8 +12,8 @@
 
 #ifndef COMMAND_H
 # define COMMAND_H
-#include "token.h"
 
+#include "token.h"
 
 typedef struct			s_command
 {

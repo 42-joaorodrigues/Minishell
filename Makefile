@@ -22,21 +22,34 @@ SRC_BUILTIN		= src/builtin/builtin.c \
 				  src/builtin/cd.c \
 				  src/builtin/echo.c \
 				  src/builtin/pwd.c \
-				  src/builtin/export.c
+				  src/builtin/export.c \
+				  src/builtin/unset.c \
+				  src/builtin/env.c \
+				  src/builtin/exit.c
 SRC_COMMAND		= src/command/command.c \
 				  src/command/util.c \
 				  src/command/create.c
 SRC_ENV			= src/env/env.c \
-				  src/env/env_util.c
-SRC_EXEC		= src/exec/exec.c
-SRC_EXPAND		= src/expand/expand.c
+				  src/env/env_util.c \
+				  src/env/print.c
+SRC_EXEC		= src/exec/exec.c \
+				  src/exec/execv.c \
+				  src/exec/child.c \
+				  src/exec/path.c
+SRC_EXPAND		= src/expand/token.c \
+				  src/expand/string.c
 SRC_MINISHELL	= src/main/main.c \
-				  src/main/read.c
+				  src/main/read.c \
+				  src/main/prompt.c
+SRC_SIGNAL		= src/sig/sig.c
+SRC_STATUS		= src/status/status.c
 SRC_TEST		= src/test/test_tokens.c \
 				  src/test/test_commands.c
 SRC_TOKEN		= src/token/token.c \
 				  src/token/util.c
-SRC				= $(SRC_BUILTIN) $(SRC_COMMAND) $(SRC_ENV) $(SRC_EXEC) $(SRC_EXPAND) $(SRC_MINISHELL) $(SRC_TEST) $(SRC_TOKEN) $(SRC_UTIL)
+SRC				= $(SRC_BUILTIN) $(SRC_COMMAND) $(SRC_ENV) $(SRC_EXEC) $(SRC_EXPAND) \
+				  $(SRC_MINISHELL) $(SRC_TEST) $(SRC_SIGNAL) $(SRC_STATUS) $(SRC_TOKEN) \
+				  $(SRC_UTIL)
 OBJ				= $(SRC:src/%.c=$(O_DIR)/$(notdir %.o))
 
 # Lib Files

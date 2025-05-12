@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "test.h"
 #include "token.h"
 #include "jal_error.h"
 #include <readline/history.h>
@@ -20,22 +19,8 @@
 #include "command.h"
 #include "expand.h"
 #include "exec.h"
-#include "jal_string.h"
-
-static char *ft_prompt(const char **envp)
-{
-	char *prompt;
-	char *pwd;
-
-	pwd = (char *)ft_get_env(envp, "PWD");
-	if (pwd)
-		prompt = ft_strjoin(pwd, " > ");
-	else
-		prompt = ft_strdup("favela_shell > ");
-	if (!prompt)
-		ft_error("memory allocation failed", E_NOMEM);
-	return (prompt);
-}
+#include "sig.h"
+#include "status.h"
 
 static int	ft_execute_line(const char *line, t_env *env)
 {
@@ -45,29 +30,26 @@ static int	ft_execute_line(const char *line, t_env *env)
 	token = ft_token(line);
 	if (!token)
 		return (*ft_exit_code());
-	if (ft_expand(token, (const char **)env->array) != 0)
+	if (ft_expand_token(token, (const char **)env->array) != 0)
 		return (ft_clear_token(token), *ft_exit_code());
-	//test_print_tokens(token);
 	command = ft_command(token);
 	ft_clear_token(token);
 	if (!command)
 		return (*ft_exit_code());
-	//test_print_commands(command);
 	ft_exec(command, env);
 	ft_clear_command(command);
 	return (0);
 }
 
-int	ft_read_input(t_env *env)
+int	ft_read(t_env *env)
 {
+	char	*line;
 	char	*prompt;
-	char *line;
 
 	while (1)
 	{
+		ft_signal();
 		prompt = ft_prompt((const char **)env->array);
-		if (!prompt)
-			return (*ft_exit_code());
 		line = readline(prompt);
 		free(prompt);
 		if (!line)
@@ -75,7 +57,7 @@ int	ft_read_input(t_env *env)
 		if (*line)
 		{
 			add_history(line);
-			if (ft_execute_line(line, env) != 0 && *ft_exit_code() != E_QUOTES)
+			if (ft_execute_line(line, env) != 0 && *ft_status_code() != S_QUOTES)
 				return (*ft_exit_code());
 		}
 		free(line);

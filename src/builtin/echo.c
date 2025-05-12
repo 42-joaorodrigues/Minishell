@@ -11,19 +11,33 @@
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "jal_error.h"
 #include "jal_print.h"
 #include "jal_string.h"
+#include "status.h"
 
-void	ft_echo(const t_command *command)
+static int	ft_n_flag(const char *arg)
 {
 	int	i;
-	int	line_jump;
+
+	if (ft_strncmp(arg, "-n", 2) != 0)
+		return (0);
+	i = 2;
+	while (arg[i] == 'n')
+		i++;
+	return (arg[i] == '\0');
+}
+
+int	ft_echo(const t_command *command)
+{
+	int	i;
+	int	new_line;
 
 	i = 1;
-	line_jump = 1;
-	while (!ft_strncmp(command->args[i], "-n", 2))
+	new_line = 1;
+	while (command->args[i] && ft_n_flag(command->args[i]))
 	{
-		line_jump = 0;
+		new_line = 0;
 		i++;
 	}
 	while (command->args[i])
@@ -33,6 +47,8 @@ void	ft_echo(const t_command *command)
 			ft_putstr_fd(" ", command->fd_out);
 		i++;
 	}
-	if (line_jump)
+	if (new_line)
 		ft_putstr_fd("\n", command->fd_out);
+	*ft_status_code() = 0;
+	return (0);
 }

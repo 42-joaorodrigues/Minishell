@@ -10,8 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtin.h"
-#include "../../include/command.h"
+#include "builtin.h"
+#include "command.h"
+#include "exec.h"
+#include "exec_int.h"
 
 void	ft_exec(t_command *command, t_env *env)
 {
@@ -21,6 +23,8 @@ void	ft_exec(t_command *command, t_env *env)
 	{
 		if (ft_is_builtin(command->cmd))
 			ft_exec_builtin(command, env);
+		else
+			ft_execv(command, env->array);
 		command = command->next;
 	}
 }

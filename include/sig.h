@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                        :+:      :+:    :+:   */
+/*   signal.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: joao-alm <joao-alm@student.42luxembourg.>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:02:42 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:18 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/05/12 18:57:46 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/05/12 18:57:49 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef SIGNAL_H
+#define SIGNAL_H
 
-# include "env.h"
+void	ft_signal(void);
 
-# define NAME "favela_shell"
-# define PROMPT "favela_shell > "
-
-// Read
-int		ft_read(t_env *env);
-// Prompt
-char	*ft_prompt(const char **envp);
-
-#endif // MINISHELL_H
+#endif //SIGNAL_H

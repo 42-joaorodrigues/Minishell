@@ -15,6 +15,7 @@
 
 #include "token.h"
 
-int	ft_expand(t_token *token, const char **envp);
+int		ft_expand_token(t_token *token, const char **envp);
+char	*ft_expand_str(char *str, const char **envp);
 
 #endif //EXPAND_H

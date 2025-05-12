@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                        :+:      :+:    :+:   */
+/*   command_int.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:02:42 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:18 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/05/07 18:13:03 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/05/07 18:13:06 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef COMMAND_INT_H
+#define COMMAND_INT_H
 
-# include "env.h"
+#include "command.h"
+#include "token.h"
 
-# define NAME "favela_shell"
-# define PROMPT "favela_shell > "
+t_command	*ft_create_command(t_token **token);
 
-// Read
-int		ft_read(t_env *env);
-// Prompt
-char	*ft_prompt(const char **envp);
-
-#endif // MINISHELL_H
+#endif //COMMAND_INT_H

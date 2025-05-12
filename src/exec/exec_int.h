@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                        :+:      :+:    :+:   */
+/*   exec_int.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: joao-alm <joao-alm@student.42luxembourg.>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:02:42 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:18 by joao-alm         ###   ########.fr       */
+/*   Created: 2025/05/12 21:13:50 by joao-alm          #+#    #+#             */
+/*   Updated: 2025/05/12 21:13:53 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXEC_INT_H
+#define EXEC_INT_H
 
-# include "env.h"
+#include "command.h"
 
-# define NAME "favela_shell"
-# define PROMPT "favela_shell > "
+// Execv
+int		ft_execv(t_command *cmd, char **envp);
+// Child
+void	ft_child(t_command *cmd, char **envp);
+// Path
+char	*ft_path(char *cmd, char **envp);
 
-// Read
-int		ft_read(t_env *env);
-// Prompt
-char	*ft_prompt(const char **envp);
-
-#endif // MINISHELL_H
+#endif //EXEC_INT_H

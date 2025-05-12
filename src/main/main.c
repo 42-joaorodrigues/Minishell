@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ft_init_env(&env, envp) != 0)
 		return (ft_free_matrix((void **)env.array), *ft_exit_code());
-	if (ft_read_input(&env) != 0)
+	if (ft_read(&env) != 0)
 		return (ft_free_matrix((void **)env.array), *ft_exit_code());
 	ft_free_matrix((void **)env.array);
 	return (0);

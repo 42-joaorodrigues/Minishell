@@ -22,9 +22,13 @@ typedef struct s_env
 	int		capacity;
 }			t_env;
 
+// Env
 int			ft_init_env(t_env *env, char **envp);
 int			ft_set_env(t_env *env, const char *key, const char *value);
 const char	*ft_get_env(const char **envp, const char *key);
 void		ft_unset_env(t_env *env, const char *key);
+
+// Print
+void		ft_print_env_fd(char **envp, int fd_out);
 
 #endif // ENV_H
