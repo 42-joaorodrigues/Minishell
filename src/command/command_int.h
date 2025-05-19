@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 
 #ifndef COMMAND_INT_H
-#define COMMAND_INT_H
+# define COMMAND_INT_H
 
-#include "command.h"
-#include "token.h"
+# include "command.h"
+# include "token.h"
 
 t_command	*ft_create_command(t_token **token);
 
-#endif //COMMAND_INT_H
+#endif // COMMAND_INT_H

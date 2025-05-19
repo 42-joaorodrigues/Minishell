@@ -11,15 +11,17 @@
 /* ************************************************************************** */
 
 #ifndef EXEC_INT_H
-#define EXEC_INT_H
+# define EXEC_INT_H
 
-#include "command.h"
+# include "command.h"
 
 // Execv
-int		ft_execv(t_command *cmd, char **envp);
+int		ft_execv(t_command *head, t_command *cmd, char **envp, int *pid_ref);
 // Child
-void	ft_child(t_command *cmd, char **envp);
+void	ft_child(t_command *head, t_command *cmd, char **envp);
 // Path
 char	*ft_path(char *cmd, char **envp);
+// Close
+void	ft_close_fd(t_command *cmd);
 
-#endif //EXEC_INT_H
+#endif // EXEC_INT_H

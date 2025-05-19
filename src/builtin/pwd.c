@@ -16,9 +16,9 @@
 #include "minishell.h"
 #include "status.h"
 
-int	ft_pwd(const t_command *cmd, t_env *env)
+int	ft_pwd(t_command *cmd, const char **envp)
 {
-	ft_putendl_fd((char *)ft_get_env((const char **)env->array, "PWD"), cmd->fd_out);
-	*ft_status_code() = 0;
+	ft_putendl_fd((char *)ft_get_env(envp, "PWD"), cmd->fd_out);
+	cmd->exit = 0;
 	return (0);
 }

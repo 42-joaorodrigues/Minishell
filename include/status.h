@@ -11,23 +11,26 @@
 /* ************************************************************************** */
 
 #ifndef STATUS_H
-#define STATUS_H
+# define STATUS_H
 
-enum e_status
-{
-	S_QUOTES = 100,
-	S_CD_NO_PATH,
-	S_CD_INVALID_PATH,
-	S_GETCWD,
-	S_UNSET_ARGS,
-	S_ENV_ARGS,
-	S_EXIT_NUM,
-	S_EXIT_ARGS,
-	S_FORK,
-	S_CMD_NOT_FOUND
-};
+# define S_QUOTES 70
+# define S_TKN_SYNTAX 2
+# define S_CD_NO_PATH 1
+# define S_CD_ARGS 1
+# define S_CD_INVALID_PATH 1
+# define S_GETCWD 1
+# define S_EXPORT_ARGS 1
+# define S_PWD_ARGS 1
+# define S_ENV_ARGS 1
+# define S_EXIT_NUM 2
+# define S_EXIT_ARGS 1
+# define S_FORK 1
+# define S_CMD_NOT_FOUND 127
+# define S_NO_PERM 1
 
-int	*ft_status_code();
-int	ft_status(const char *str, const int status);
+int	*ft_status_code(void);
+int	ft_status(const char *prefix, const char *str, int status);
 
-#endif //STATUS_H
+int	*ft_last_status_code(void);
+
+#endif // STATUS_H

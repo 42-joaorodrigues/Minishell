@@ -15,16 +15,21 @@
 #include "minishell.h"
 #include <stdlib.h>
 
+#include "jal_string.h"
+
 int	main(int ac, char **av, char **envp)
 {
-	t_env	env;
+	int		colour;
+	char	**envp_dup;
 
-	(void)ac;
-	(void)av;
-	if (ft_init_env(&env, envp) != 0)
-		return (ft_free_matrix((void **)env.array), *ft_exit_code());
-	if (ft_read(&env) != 0)
-		return (ft_free_matrix((void **)env.array), *ft_exit_code());
-	ft_free_matrix((void **)env.array);
-	return (0);
+	colour = 0;
+	if (ac == 2)
+		if (!ft_strcmp(av[1], "colour"))
+			colour = 1;
+	envp_dup = ft_strarrdup(envp);
+	if (!envp_dup)
+		return (ft_error("memory allocation failed", E_NOMEM));
+	ft_read(&envp_dup, colour);
+	ft_free_envp(envp_dup);
+	return (*ft_exit_code());
 }

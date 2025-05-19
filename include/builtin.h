@@ -14,17 +14,17 @@
 # define BUILTIN_H
 
 # include "command.h"
-#include "env.h"
+# include "env.h"
 
 int		ft_is_builtin(const char *cmd);
-void	ft_exec_builtin(t_command *command, t_env *env);
+void	ft_exec_builtin(t_command *command, char ***envp);
 
-int	ft_echo(const t_command *command);
-int	ft_cd(const t_command *cd, t_env *env);
-int	ft_pwd(const t_command *cmd, t_env *env);
-int	ft_export(const t_command *command, t_env *env);
-int	ft_unset(const t_command *cmd, t_env *env);
-int	ft_env(const t_command *cmd, t_env *env);
-int	ft_exit(t_command *cmd, t_env *env);
+int		ft_echo(t_command *command);
+int		ft_cd(t_command *cd, char ***envp);
+int		ft_pwd(t_command *cmd, const char **envp);
+int		ft_export(t_command *command, char ***envp);
+int		ft_unset(t_command *cmd, char ***envp);
+int		ft_env(t_command *cmd, const char **envp);
+int		ft_exit(t_command *cmd, char **envp);
 
 #endif // BUILTIN_H

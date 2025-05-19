@@ -49,6 +49,8 @@ char	*ft_path(char *cmd, char **envp)
 	char	*env_path;
 	char	**path_array;
 
+	if (!cmd)
+		return (ft_strdup(""));
 	env_path = (char *)ft_get_env((const char **)envp, "PATH");
 	if (!env_path || cmd[0] == '/' || cmd[0] == '.')
 	{

@@ -11,14 +11,14 @@
 /* ************************************************************************** */
 
 #ifndef JAL_ERROR_H
-#define JAL_ERROR_H
+# define JAL_ERROR_H
 
 # define ERROR_PINK "\033[38;5;211m"
 # define ERROR_RESET "\033[0m"
 
-# define E_NOMEM 50
+# define E_NOMEM 69
 
 int	*ft_exit_code(void);
 int	ft_error(const char *err_str, int err_no);
 
-#endif //JAL_ERROR_H
+#endif // JAL_ERROR_H

@@ -6,7 +6,7 @@
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 08:56:30 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/04/02 08:56:32 by joao-alm         ###   ########.fr       */
+/*   Updated: 2025/05/19 07:24:01 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 
 void	test_print_commands(t_command *command)
 {
-	int			j;
+	int	i;
+	int	j;
 
 	j = 0;
 	while (command)
@@ -26,8 +27,10 @@ void	test_print_commands(t_command *command)
 		printf("\n");
 		printf(GREEN "###Command[%d]###\n" RESET, j++);
 		printf(YELLOW "cmd:" RESET " %s\n", command->cmd);
-		for (int i = 0; command->args[i]; i++)
-			printf(YELLOW "args[%d]:" RESET " %s\n", i, command->args[i]);
+		i = 0;
+		if (command->args)
+			while (command->args[i++])
+				printf(YELLOW "args[%d]:" RESET " %s\n", i, command->args[i]);
 		printf(YELLOW "input_fd:" RESET " %d\n", command->fd_in);
 		printf(YELLOW "output_fd:" RESET " %d\n", command->fd_out);
 		printf(GREEN "###############" RESET "\n");

@@ -19,8 +19,8 @@
 # define PROMPT "favela_shell > "
 
 // Read
-int		ft_read(t_env *env);
+void	ft_read(char ***envp, const int colour);
 // Prompt
-char	*ft_prompt(const char **envp);
+char	*ft_prompt(const char **envp, int colour);
 
 #endif // MINISHELL_H

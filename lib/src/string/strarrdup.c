@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "jal_string.h"
+#include "jal_string.h"
 
 char	**ft_strarrdup(char **src)
 {

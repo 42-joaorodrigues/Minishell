@@ -13,11 +13,9 @@
 #ifndef TOKEN_H
 # define TOKEN_H
 
-typedef enum		e_token_type
+typedef enum e_token_type
 {
 	TOKEN_WORD,
-	TOKEN_SQUOTE,
-	TOKEN_DQUOTE,
 	TOKEN_PIPE,
 	TOKEN_REDIRECT_IN,
 	TOKEN_REDIRECT_OUT,
@@ -25,7 +23,7 @@ typedef enum		e_token_type
 	TOKEN_HEREDOC
 }					t_token_type;
 
-typedef struct		s_token
+typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
@@ -37,8 +35,9 @@ t_token				*ft_token(const char *str);
 
 // Util
 t_token_type		ft_token_type(const char *value);
-t_token				*ft_new_token(t_token_type type, char *value);
+t_token				*ft_new_token(char *value);
 void				ft_token_add_back(t_token **head, t_token *new);
-void				ft_clear_token(t_token *head);
+void				ft_token_free(t_token *token);
+void				ft_token_clear(t_token *head);
 
 #endif // TOKEN_H

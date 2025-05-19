@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 
 #ifndef EXEC_H
-#define EXEC_H
+# define EXEC_H
 
-#include "command.h"
-#include "env.h"
+# include "command.h"
+# include "env.h"
 
-void	ft_exec(t_command *command, t_env *env);
+void	ft_exec(t_command *head, char ***envp);
 
-#endif //EXEC_H
+#endif // EXEC_H

@@ -10,22 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "jal_string.h"
 #include "status.h"
 #include <unistd.h>
-#include "jal_string.h"
 
-int	*ft_status_code()
+int	*ft_status_code(void)
 {
 	static int	status = 0;
+
 	return (&status);
 }
 
-int	ft_status(const char *str, const int status)
+int	ft_status(const char *prefix, const char *str, const int status)
 {
 	if (str)
 	{
-		write(1, str, ft_strlen(str));
-		write(1, "\n", 1);
+		write(2, prefix, ft_strlen(prefix));
+		write(2, ": ", 2);
+		write(2, str, ft_strlen(str));
+		write(2, "\n", 1);
 	}
 	*ft_status_code() = status;
 	return (status);

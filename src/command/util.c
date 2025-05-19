@@ -11,22 +11,27 @@
 /* ************************************************************************** */
 
 #include "command.h"
-#include <stdlib.h>
-#include <unistd.h>
 #include "jal_error.h"
 #include "jal_memory.h"
+#include <stdlib.h>
+#include <unistd.h>
 
-t_command	*ft_new_command(char *cmd, char **args, const int fd_in, const int fd_out)
+t_command	*ft_new_command(char **args, int fd_in, int fd_out,
+		const int exit_code)
 {
 	t_command	*new;
 
 	new = malloc(sizeof(t_command));
 	if (!new)
 		return (ft_error("memory allocation failed", E_NOMEM), NULL);
-	new->cmd = cmd;
+	new->cmd = NULL;
 	new->args = args;
+	if (args)
+		new->cmd = args[0];
 	new->fd_in = fd_in;
 	new->fd_out = fd_out;
+	new->pid = 0;
+	new->exit = exit_code;
 	new->next = NULL;
 	return (new);
 }
@@ -48,19 +53,23 @@ void	ft_command_add_back(t_command **head, t_command *new)
 		*head = new;
 }
 
-void	ft_free_command(t_command *command)
+void	ft_free_command(t_command *cmd)
 {
-	if (!command)
+	if (!cmd)
 		return ;
-	if (command->cmd)
-		free(command->cmd);
-	if (command->args)
-		ft_free_matrix((void **)command->args);
-	if (command->fd_in > 2)
-		close(command->fd_in);
-	if (command->fd_out > 2)
-		close(command->fd_out);
-	free(command);
+	if (cmd->args)
+		ft_free_matrix((void **)cmd->args);
+	if (cmd->fd_in > 2)
+	{
+		close(cmd->fd_in);
+		cmd->fd_in = -1;
+	}
+	if (cmd->fd_out > 2)
+	{
+		close(cmd->fd_out);
+		cmd->fd_out = -1;
+	}
+	free(cmd);
 }
 
 void	ft_clear_command(t_command *head)

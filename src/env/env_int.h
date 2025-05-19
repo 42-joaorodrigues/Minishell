@@ -10,13 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_PRIVATE_H
-#define ENV_PRIVATE_H
+#ifndef ENV_INT_H
+# define ENV_INT_H
 
-#include "env.h"
+int		ft_key_exists(const char *var, const char *key);
+char	**ft_realloc_envp(char **envp);
+char	*ft_new_entry(const char *key, const char *value);
 
-int		ft_key_matches(const char *var, const char *key);
-int		ft_add_slots_env(t_env *env);
-char	*ft_create_env_entry(const char *key, const char *value);
-
-#endif //ENV_PRIVATE_H
+#endif // ENV_INT_H

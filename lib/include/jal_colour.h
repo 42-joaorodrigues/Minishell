@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef JAL_COLOUR_H
-#define JAL_COLOUR_H
+# define JAL_COLOUR_H
 
 // Colours
 # define PINK "\033[38;5;211m"
@@ -29,4 +29,4 @@
 // # define PURPLE ""
 // # define BOLD ""
 
-#endif //JAL_COLOUR_H
+#endif // JAL_COLOUR_H

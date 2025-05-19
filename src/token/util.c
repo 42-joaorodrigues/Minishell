@@ -27,21 +27,19 @@ t_token_type	ft_token_type(const char *value)
 		return (TOKEN_APPEND);
 	if (ft_strncmp(value, "<<", 2) == 0 && value[2] == '\0')
 		return (TOKEN_HEREDOC);
-	if (value[0] == '\'' && value[ft_strlen(value) - 1] == '\'')
-		return (TOKEN_SQUOTE);
-	if (value[0] == '\"' && value[ft_strlen(value) - 1] == '\"')
-		return (TOKEN_DQUOTE);
 	return (TOKEN_WORD);
 }
 
-t_token	*ft_new_token(const t_token_type type, char *value)
+t_token	*ft_new_token(char *value)
 {
 	t_token	*new;
 
+	if (!value)
+		return (NULL);
 	new = malloc(sizeof(t_token));
 	if (!new)
 		return (ft_error("memory allocation failed", E_NOMEM), NULL);
-	new->type = type;
+	new->type = ft_token_type(value);
 	new->value = value;
 	new->next = NULL;
 	return (new);
@@ -64,7 +62,7 @@ void	ft_token_add_back(t_token **head, t_token *new)
 		*head = new;
 }
 
-void	ft_free_token(t_token *token)
+void	ft_token_free(t_token *token)
 {
 	if (!token)
 		return ;
@@ -73,16 +71,14 @@ void	ft_free_token(t_token *token)
 	free(token);
 }
 
-void	ft_clear_token(t_token *head)
+void	ft_token_clear(t_token *head)
 {
 	t_token	*next;
 
 	while (head)
 	{
 		next = head->next;
-		ft_free_token(head);
+		ft_token_free(head);
 		head = next;
 	}
 }
-
-

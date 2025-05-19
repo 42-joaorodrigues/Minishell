@@ -11,27 +11,32 @@
 /* ************************************************************************** */
 
 #include "builtin.h"
-#include <unistd.h>
-
 #include "jal_error.h"
 #include "minishell.h"
 #include "status.h"
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
 
-int	ft_cd(const t_command *command, t_env *env)
+int	ft_cd(t_command *command, char ***envp)
 {
 	char	old_pwd[1024];
 	char	new_pwd[1024];
 
-	if (!getcwd(old_pwd, 1024))
-		return (ft_status("cd: failed to get cwd", S_GETCWD));
 	if (!command->args[1])
-		return (ft_status("cd: no cd path", S_CD_NO_PATH));
+		return (command->exit = S_CD_NO_PATH, ft_status("cd", "no cd path",
+				S_CD_NO_PATH));
+	if (command->args[2])
+		return (command->exit = S_CD_ARGS, ft_status("cd", "too many arguments",
+				S_CD_ARGS));
+	if (!getcwd(old_pwd, 1024))
+		return (command->exit = 1, ft_status("cd", strerror(errno), 1));
 	if (chdir(command->args[1]) != 0)
-		return (ft_status("cd: invalid cd path", S_CD_INVALID_PATH));
+		return (command->exit = 1, ft_status("cd", strerror(errno), 1));
 	if (!getcwd(new_pwd, 1024))
-		return (ft_status("cd: failed to get cwd", S_GETCWD));
-	ft_set_env(env, "OLDPWD", old_pwd);
-	ft_set_env(env, "PWD", new_pwd);
-	*ft_status_code() = 0;
+		return (command->exit = 1, ft_status("cd", strerror(errno), 1));
+	ft_set_env(envp, "OLDPWD", old_pwd);
+	ft_set_env(envp, "PWD", new_pwd);
+	command->exit = 0;
 	return (0);
 }

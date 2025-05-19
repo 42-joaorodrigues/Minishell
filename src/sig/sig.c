@@ -6,7 +6,7 @@
 /*   By: joao-alm <joao-alm@student.42luxembourg.>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:39:27 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/05/12 18:42:52 by joao-alm         ###   ########.fr       */
+/*   Updated: 2025/05/19 07:55:40 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <signal.h>
 #include <unistd.h>
 #include <readline/readline.h>
+
+#include "status.h"
 
 void	ft_handle_sigint(int signum)
 {

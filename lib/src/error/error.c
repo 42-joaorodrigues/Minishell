@@ -16,6 +16,7 @@
 int	*ft_exit_code(void)
 {
 	static int	exit_code = 0;
+
 	return (&exit_code);
 }
 

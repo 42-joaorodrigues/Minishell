@@ -28,7 +28,7 @@ static int	ft_n_flag(const char *arg)
 	return (arg[i] == '\0');
 }
 
-int	ft_echo(const t_command *command)
+int	ft_echo(t_command *command)
 {
 	int	i;
 	int	new_line;
@@ -49,6 +49,6 @@ int	ft_echo(const t_command *command)
 	}
 	if (new_line)
 		ft_putstr_fd("\n", command->fd_out);
-	*ft_status_code() = 0;
+	command->exit = 0;
 	return (0);
 }

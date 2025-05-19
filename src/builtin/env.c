@@ -13,11 +13,12 @@
 #include "builtin.h"
 #include "status.h"
 
-int	ft_env(const t_command *cmd, t_env *env)
+int	ft_env(t_command *cmd, const char **envp)
 {
 	if (cmd->args[1])
-		return (ft_status("env: too many arguments", S_ENV_ARGS));
-	ft_print_env_fd(env->array, cmd->fd_out);
-	*ft_status_code() = 0;
+		return (cmd->exit = S_ENV_ARGS, ft_status("env", "too many arguments",
+				S_ENV_ARGS));
+	ft_print_env_fd(envp, cmd->fd_out);
+	cmd->exit = 0;
 	return (0);
 }

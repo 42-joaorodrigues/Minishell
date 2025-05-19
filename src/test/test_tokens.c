@@ -10,11 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "jal_colour.h"
 #include "test.h"
 #include "token.h"
 #include <stdio.h>
-
-#include "jal_colour.h"
 
 static char	*ft_token_type_str(const t_token_type token_type)
 {
@@ -30,10 +29,6 @@ static char	*ft_token_type_str(const t_token_type token_type)
 		return ("Redirect_in");
 	if (token_type == TOKEN_REDIRECT_OUT)
 		return ("Redirect_out");
-	if (token_type == TOKEN_SQUOTE)
-		return ("Single_quote");
-	if (token_type == TOKEN_DQUOTE)
-		return ("Double_quote");
 	return ("Unknown");
 }
 
@@ -42,8 +37,8 @@ void	test_print_tokens(t_token *token)
 	printf(GREEN "###Tokens###\n" RESET);
 	while (token)
 	{
-		printf(YELLOW "type:" RESET " %-13s" YELLOW "value:" RESET " %s\n", ft_token_type_str(token->type),
-			token->value);
+		printf(YELLOW "type:" RESET " %-13s" YELLOW "value:" RESET " %s\n",
+			ft_token_type_str(token->type), token->value);
 		token = token->next;
 	}
 	printf(GREEN "############" RESET "\n");

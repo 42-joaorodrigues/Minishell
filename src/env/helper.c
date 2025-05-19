@@ -13,9 +13,10 @@
 #include "env.h"
 #include "env_int.h"
 #include "jal_error.h"
+#include "jal_memory.h"
 #include "jal_string.h"
 
-int	ft_key_matches(const char *var, const char *key)
+int	ft_key_exists(const char *var, const char *key)
 {
 	size_t	key_len;
 
@@ -23,30 +24,24 @@ int	ft_key_matches(const char *var, const char *key)
 	return (ft_strncmp(var, key, key_len) == 0 && var[key_len] == '=');
 }
 
-int	ft_add_slots_env(t_env *env)
+char	**ft_realloc_envp(char **envp)
 {
-	char	**new_array;
+	char	**new;
 	int		i;
 
-	new_array = malloc((env->capacity + EXTRA_SLOTS + 1) * sizeof(char *));
-	if (!new_array)
-		return (ft_error("memory allocation failed", E_NOMEM));
-	i = 0;
-	while (i < env->count)
-	{
-		new_array[i] = env->array[i];
-		i++;
-	}
-	new_array[i] = NULL;
-	free(env->array);
-	env->array = new_array;
-	env->capacity += EXTRA_SLOTS;
-	return (0);
+	new = malloc((ft_strarrcount(envp) + 1 + 1) * sizeof(char *));
+	if (!new)
+		return (ft_error("memory allocation failed", E_NOMEM), NULL);
+	i = -1;
+	while (envp[++i])
+		new[i] = envp[i];
+	new[i] = NULL;
+	return (new);
 }
 
-char	*ft_create_env_entry(const char *key, const char *value)
+char	*ft_new_entry(const char *key, const char *value)
 {
-	char *entry;
+	char	*entry;
 
 	if (!key || !value)
 		return (NULL);

@@ -30,14 +30,15 @@ SRC_COMMAND		= src/command/command.c \
 				  src/command/util.c \
 				  src/command/create.c
 SRC_ENV			= src/env/env.c \
-				  src/env/env_util.c \
-				  src/env/print.c
+				  src/env/helper.c
 SRC_EXEC		= src/exec/exec.c \
 				  src/exec/execv.c \
 				  src/exec/child.c \
-				  src/exec/path.c
-SRC_EXPAND		= src/expand/token.c \
-				  src/expand/string.c
+				  src/exec/path.c \
+				  src/exec/util.c
+SRC_EXPAND		= src/expand/expand.c \
+				  src/expand/str.c \
+				  src/expand/chunk.c
 SRC_MINISHELL	= src/main/main.c \
 				  src/main/read.c \
 				  src/main/prompt.c
@@ -61,7 +62,7 @@ LIBS_INC		= -I lib/include \
 				  -I /usr/include/readline
 
 # Mandatory Rules
-all: $(header) $(JAL) $(NAME) valgrind_script
+all: $(header) $(JAL) $(NAME)
 
 $(O_DIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)

@@ -6,19 +6,23 @@
 /*   By: joao-alm <joao-alm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:11:28 by joao-alm          #+#    #+#             */
-/*   Updated: 2025/05/07 18:11:31 by joao-alm         ###   ########.fr       */
+/*   Updated: 2025/05/19 07:31:51 by joao-alm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <readline/readline.h>
+#include "../exec/exec_int.h"
 #include "command.h"
 #include "jal_memory.h"
 #include "jal_print.h"
 #include "jal_string.h"
+#include "status.h"
 #include "token.h"
+#include <errno.h>
+#include <fcntl.h>
+#include <readline/readline.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 static int	ft_count_args(t_token *token)
 {
@@ -27,34 +31,15 @@ static int	ft_count_args(t_token *token)
 	count = 0;
 	if (!token)
 		return (count);
-	while (token && token->type == TOKEN_WORD)
+	while (token && token->type != TOKEN_PIPE)
 	{
+		if (token->type != TOKEN_WORD)
+			token = token->next;
+		else
+			count++;
 		token = token->next;
-		count++;
 	}
 	return (count);
-}
-
-static char	**ft_command_args(t_token **token)
-{
-	char	**args;
-	int		i;
-
-	if (!token)
-		return (NULL);
-	args = malloc((ft_count_args(*token) + 1) * sizeof(char *));
-	if (!args)
-		return (NULL);
-	i = -1;
-	while (*token && (*token)->type == TOKEN_WORD)
-	{
-		args[++i] = ft_strdup((*token)->value);
-		if (!args[i])
-			return (ft_free_partial_matrix((void **)args, i - 1), NULL);
-		*token = (*token)->next;
-	}
-	args[++i] = NULL;
-	return (args);
 }
 
 static int	ft_heredoc(const char *delimiter)
@@ -79,51 +64,70 @@ static int	ft_heredoc(const char *delimiter)
 	return (pipe_fd[0]);
 }
 
-static void	ft_command_fds(t_token **token, int *fd_in, int *fd_out)
+static int	ft_redirection(int *fd_in, int *fd_out, t_token_type type,
+		char *value)
 {
-	t_token	*redirect;
+	if (type == TOKEN_REDIRECT_IN)
+		*fd_in = open(value, O_RDONLY);
+	else if (type == TOKEN_REDIRECT_OUT)
+		*fd_out = open(value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (type == TOKEN_APPEND)
+		*fd_out = open(value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else if (type == TOKEN_HEREDOC)
+		*fd_in = ft_heredoc(value);
+	if (*fd_in == -1 || *fd_out == -1)
+	{
+		ft_status("redirection", strerror(errno), 1);
+		return (1);
+	}
+	return (0);
+}
 
-	if (!token)
-		return ;
+static int	ft_fill_command(t_token **token, char **args, int *fd_in,
+		int *fd_out)
+{
+	int	i;
+
+	i = 0;
 	while (*token && (*token)->type != TOKEN_PIPE)
 	{
 		if ((*token)->type != TOKEN_WORD)
 		{
-			redirect = (*token)->next;
-			if ((*token)->type == TOKEN_REDIRECT_IN)
-				*fd_in = open(redirect->value, O_RDONLY);
-			else if ((*token)->type == TOKEN_REDIRECT_OUT)
-				*fd_out = open(redirect->value,
-						O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			else if ((*token)->type == TOKEN_APPEND)
-				*fd_out = open(redirect->value,
-						O_WRONLY | O_CREAT | O_APPEND, 0644);
-			else if ((*token)->type == TOKEN_HEREDOC)
-				*fd_in = ft_heredoc(redirect->value);
+			if (ft_redirection(fd_in, fd_out, (*token)->type,
+					(*token)->next->value))
+			{
+				while (*token && (*token)->type != TOKEN_PIPE)
+					*token = (*token)->next;
+				args[i] = NULL;
+				return (1);
+			}
 			*token = (*token)->next;
 		}
+		else
+			args[i++] = ft_strdup((*token)->value);
 		*token = (*token)->next;
 	}
+	args[i] = NULL;
+	return (0);
 }
 
 t_command	*ft_create_command(t_token **token)
 {
-	char		**args;
-	char		*cmd;
-	int			fd[2];
+	char	**args;
+	int		fd[2];
+	int		exit_code;
 
-	if (!token)
-		return (NULL);
-	args = ft_command_args(token);
+	args = malloc((ft_count_args(*token) + 1) * sizeof(char *));
 	if (!args)
 		return (NULL);
-	cmd = ft_strdup(args[0]);
-	if (!cmd)
-		return (ft_free_matrix((void **)args), NULL);
 	fd[0] = STDIN_FILENO;
 	fd[1] = STDOUT_FILENO;
-	ft_command_fds(token, &fd[0], &fd[1]);
-	if (fd[0] == -1 || fd[1] == -1)
-		return (ft_free_matrix((void **)args), free(cmd), NULL);
-	return (ft_new_command(cmd, args, fd[0], fd[1]));
+	exit_code = 0;
+	if (ft_fill_command(token, args, &fd[0], &fd[1]))
+	{
+		ft_free_matrix((void **)args);
+		args = NULL;
+		exit_code = 1;
+	}
+	return (ft_new_command(args, fd[0], fd[1], exit_code));
 }

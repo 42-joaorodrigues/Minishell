@@ -18,24 +18,16 @@
 #include <sys/wait.h>
 #include "exec_int.h"
 
-int	ft_execv(t_command *cmd, char **envp)
+int	ft_execv(t_command *head, t_command *cmd, char **envp, int *pid_ref)
 {
 	pid_t	pid;
-	int		status;
 
 	pid = fork();
 	if (pid < 0)
-		return (ft_status("fork failed", S_FORK));
+		return (ft_status("error", "fork failed", S_FORK));
 	if (pid == 0)
-		ft_child(cmd, envp);
+		ft_child(head, cmd, envp);
 	else
-	{
-		if (cmd->fd_in != STDIN_FILENO)
-			close(cmd->fd_in);
-		if (cmd->fd_out != STDOUT_FILENO)
-			close(cmd->fd_out);
-		waitpid(pid, &status, 0);
-		*ft_status_code() = WEXITSTATUS(status);
-	}
+		*pid_ref = pid;
 	return (0);
 }

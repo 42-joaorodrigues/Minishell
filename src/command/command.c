@@ -11,50 +11,54 @@
 /* ************************************************************************** */
 
 #include "command.h"
+#include "command_int.h"
+#include "jal_error.h"
 #include "jal_string.h"
+#include "test.h"
 #include "token.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "command_int.h"
+
+static int	ft_handle_command(t_token **token, t_command **head,
+		t_command *prev, t_command **new)
+{
+	int	pipe_fd[2];
+
+	*new = ft_create_command(token);
+	if (!*new)
+		return (1);
+	ft_command_add_back(head, *new);
+	if (prev)
+	{
+		if (pipe(pipe_fd) == -1)
+			return (ft_error("pipe failed", 1));
+		if (prev->fd_out == STDOUT_FILENO)
+			prev->fd_out = pipe_fd[1];
+		if ((*new)->fd_in == STDIN_FILENO)
+			(*new)->fd_in = pipe_fd[0];
+	}
+	return (0);
+}
 
 t_command	*ft_command(t_token *token)
 {
-	t_token		*current;
 	t_command	*head;
+	t_command	*prev;
 	t_command	*new;
-	int			prev_pipe_fd[2];
-	int			pipe_flag;
 
-	if (!token)
-		return (NULL);
 	head = NULL;
-	pipe_flag = 0;
-	current = token;
-	while (current)
+	prev = NULL;
+	new = NULL;
+	while (token)
 	{
-		new = ft_create_command(&current);
-		if (!new)
-			return (ft_clear_command(head), NULL);
-		if (pipe_flag && new->fd_in == STDIN_FILENO)
-			new->fd_in = prev_pipe_fd[0];
-		else if (pipe_flag)
-			close(prev_pipe_fd[0]);
-		if (current && current->type == TOKEN_PIPE)
-		{
-			if (pipe(prev_pipe_fd) < 0)
-				return (ft_free_command(new), ft_clear_command(head), NULL);
-			if (new->fd_out == STDOUT_FILENO)
-				new->fd_out = prev_pipe_fd[1];
-			else
-				close(prev_pipe_fd[1]);
-			pipe_flag = 1;
-			current = current->next;
-		}
-		else
-			pipe_flag = 0;
-		ft_command_add_back(&head, new);
+		if (token->type != TOKEN_PIPE)
+			if (ft_handle_command(&token, &head, prev, &new))
+				return (ft_clear_command(head), NULL);
+		prev = new;
+		if (token && token->type == TOKEN_PIPE)
+			token = token->next;
 	}
 	return (head);
 }

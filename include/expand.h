@@ -11,11 +11,13 @@
 /* ************************************************************************** */
 
 #ifndef EXPAND_H
-#define EXPAND_H
+# define EXPAND_H
 
-#include "token.h"
+# include "token.h"
 
-int		ft_expand_token(t_token *token, const char **envp);
+// Token
+t_token	*ft_expand(const t_token *token, const char **envp);
+// Str
 char	*ft_expand_str(char *str, const char **envp);
 
-#endif //EXPAND_H
+#endif // EXPAND_H

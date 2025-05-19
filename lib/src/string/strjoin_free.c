@@ -12,7 +12,7 @@
 
 #include "jal_string.h"
 
-char *ft_strjoin_free(char *s1, char *s2, const int to_free)
+char	*ft_strjoin_free(char *s1, char *s2, const int to_free)
 {
 	char	*joined;
 
@@ -23,4 +23,3 @@ char *ft_strjoin_free(char *s1, char *s2, const int to_free)
 		free(s2);
 	return (joined);
 }
-

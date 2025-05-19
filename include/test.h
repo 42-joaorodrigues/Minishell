@@ -13,8 +13,8 @@
 #ifndef TEST_H
 # define TEST_H
 
-#include "command.h"
-#include "token.h"
+# include "command.h"
+# include "token.h"
 
 void	test_print_tokens(t_token *token);
 void	test_print_commands(t_command *command);

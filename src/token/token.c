@@ -10,84 +10,85 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include "token.h"
 #include "jal_error.h"
 #include "jal_string.h"
-#include "minishell.h"
-#include "token.h"
-
 #include "status.h"
 
-static char	*ft_extract_symbol_value(const char *str)
+static int	ft_valid(const t_token *token)
 {
-	char	*value;
-
-	if ((*str == '<' && *(str + 1) == '<') || (*str == '>' && *(str
-				+ 1) == '>'))
-		value = ft_strndup(str, 2);
-	else
-		value = ft_strndup(str, 1);
-	if (!value)
-		ft_error("memory allocation failed", E_NOMEM);
-	return (value);
+	while (token)
+	{
+		if ((token->type == TOKEN_REDIRECT_IN
+				|| token->type == TOKEN_REDIRECT_OUT
+				|| token->type == TOKEN_APPEND
+				|| token->type == TOKEN_HEREDOC)
+			&& (!token->next || token->next->type != TOKEN_WORD))
+			return (0);
+		if (token->type == TOKEN_PIPE
+			&& (!token->next || token->next->type == TOKEN_PIPE))
+			return (0);
+		token = token->next;
+	}
+	return (1);
 }
 
-static char	*ft_extract_quoted_value(const char *str)
+static int	ft_extract_helper(const char *str, const int *j)
 {
-	char	*value;
-	size_t	i;
+	int		i;
 	char	quote;
 
-	quote = *str;
-	i = 1;
-	while (*(str + i) && *(str + i) != quote)
-		i++;
-	if (*(str + i) == '\0')
-		return (ft_status("syntax: unclosed quotes", S_QUOTES), NULL);
-	value = ft_strndup(str, i + 1);
-	if (!value)
-		ft_error("memory allocation failed", E_NOMEM);
-	return (value);
+	i = *j;
+	while (str[i] && str[i] != '<' && str[i] != '>' && str[i] != '|'
+		&& str[i] != ' ')
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			quote = str[i++];
+			while (str[i] && str[i] != quote)
+				i++;
+			if (str[i] == quote)
+				i++;
+			else
+				return (ft_status("syntax", "unclosed quotes", S_QUOTES), -1);
+		}
+		else
+			i++;
+	}
+	return (i);
 }
 
-static char	*ft_extract_word_value(const char *str)
+static t_token	*ft_extract(const char *str, int *i)
 {
-	char	*value;
-	size_t	i;
+	char			*result;
+	int				j;
 
-	i = 0;
-	while (*(str + i) && *(str + i) != ' ' && *(str + i) != '<' && *(str
-			+ i) != '>' && *(str + i) != '|' && *(str + i) != '\'' && *(str
-		+ i) != '\"')
-		i++;
-	value = ft_strndup(str, i);
-	if (!value)
-		ft_error("memory allocation failed", E_NOMEM);
-	return (value);
-}
-
-static t_token	*ft_create_token(const char *str, int *i)
-{
-	char			*value;
-	t_token_type	type;
-
-	if (str[*i] == '<' || str[*i] == '>' || str[*i] == '|')
-		value = ft_extract_symbol_value(str + *i);
-	else if (str[*i] == '\'' || str[*i] == '\"')
-		value = ft_extract_quoted_value(str + *i);
+	j = *i;
+	if (str[j] == '<' || str[j] == '>' || str[j] == '|')
+	{
+		if ((str[j] == '<' && str[j + 1] == '<')
+			|| (str[j] == '>' && str[j + 1] == '>'))
+			j += 2;
+		else
+			j++;
+	}
 	else
-		value = ft_extract_word_value(str + *i);
-	if (!value)
+		j = ft_extract_helper(str, &j);
+	if (j == -1)
 		return (NULL);
-	*i += ft_strlen(value);
-	type = ft_token_type(value);
-	return (ft_new_token(type, value));
+	result = ft_strndup(str + *i, j - *i);
+	if (!result)
+		return (ft_error("memory allocation failed", E_NOMEM), NULL);
+	*i = j;
+	return (ft_new_token(result));
 }
 
 t_token	*ft_token(const char *str)
 {
 	t_token	*head;
 	t_token	*new;
-	int i;
+	int		i;
 
 	head = NULL;
 	i = 0;
@@ -97,11 +98,16 @@ t_token	*ft_token(const char *str)
 			i++;
 		if (str[i])
 		{
-			new = ft_create_token(str, &i);
+			new = ft_extract(str, &i);
 			if (!new)
-				return (ft_clear_token(head), NULL);
+				return (ft_token_clear(head), NULL);
 			ft_token_add_back(&head, new);
 		}
+	}
+	if (!ft_valid(head))
+	{
+		ft_status("syntax", "unexpected token", S_TKN_SYNTAX);
+		return (ft_token_clear(head), NULL);
 	}
 	return (head);
 }

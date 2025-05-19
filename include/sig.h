@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNAL_H
-#define SIGNAL_H
+#ifndef SIG_H
+# define SIG_H
 
 void	ft_signal(void);
 
-#endif //SIGNAL_H
+#endif // SIG_H
