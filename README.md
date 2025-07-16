@@ -4,7 +4,7 @@
 
 ## Project Details
 
-For full project requirements, see the [Subject File](SUBJECT.md).
+For full project requirements, see the [Subject File](subject.md).
 
 ## What I Learned
 
@@ -243,4 +243,4 @@ This project demonstrates our proficiency in systems programming, algorithm impl
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
