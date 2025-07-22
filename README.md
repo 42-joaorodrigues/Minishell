@@ -2,10 +2,6 @@
 
 ![42 Badge](https://img.shields.io/badge/42-Project-blue) ![C Badge](https://img.shields.io/badge/Language-C-brightgreen) ![Status Badge](https://img.shields.io/badge/Status-Completed-success) ![Score Badge](https://img.shields.io/badge/Score-100%2F100-success) 
 
-## Project Details
-
-For full project requirements, see the [Subject File](subject.md).
-
 ## What I Learned
 
 Through this advanced systems programming project at 42 School, I developed crucial low-level programming skills and system administration knowledge:
